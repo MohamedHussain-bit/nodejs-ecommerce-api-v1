@@ -42,12 +42,16 @@ exports.getCategory = asyncHandler(async (req , res) => {
 // @access   Private
 exports.updateCategory = asyncHandler(async (req , res) => {
     const {id} = req.params;
-    const category = await Category.findByIdAndUpdate(id , {new : true});
+    const {name} = req.body;
+    const category = await Category.findByIdAndUpdate(
+        {_id : id},
+        {name , slug : slugify(name)}, 
+        {new : true});
     if(!category){
         return res.status(404).json({message : `Catgory for this id ${id} not found`});
     };
     return res.status(200).json({
         message : `Category for this id ${id} updated successfully`,
-        updateCategory : category
+        date : category
     });
 });
