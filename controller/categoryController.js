@@ -38,7 +38,7 @@ exports.getCategory = asyncHandler(async (req , res) => {
 });
 
 // @desc     Update specific category
-// @route    PUT /api/categories/id
+// @route    PUT /api/categories/:id
 // @access   Private
 exports.updateCategory = asyncHandler(async (req , res) => {
     const {id} = req.params;
@@ -53,5 +53,19 @@ exports.updateCategory = asyncHandler(async (req , res) => {
     return res.status(200).json({
         message : `Category for this id ${id} updated successfully`,
         date : category
+    });
+});
+
+// @desc     Delete specific category
+// @route    DELETE /api/categories/:id
+// @access   Private
+exports.deleteCategory = asyncHandler(async (req , res) => {
+    const {id} = req.params;
+    const category = await Category.findByIdAndDelete(id);
+    if(!category){
+        return res.status(404).json({message : `Category for this id ${id} not found`});
+    };
+    return res.status(204).json({
+        message : `Category for this id ${id} deleted successfully`
     });
 });
