@@ -13,3 +13,11 @@ exports.createCategory = asyncHandler(async (req , res) => {
     });
     return res.status(201).json({ category : newCategory});
 });
+
+// @desc     Get category
+// @route    GET /api/categories
+// @access   Public
+exports.getCategories = asyncHandler(async (req , res) => {
+    const categories = await CategoryModel.find({});
+    return res.status(200).json({results : categories.length, data : categories});
+});
