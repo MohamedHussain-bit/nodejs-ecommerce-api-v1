@@ -24,3 +24,15 @@ exports.getCategories = asyncHandler(async (req , res) => {
     const categories = await CategoryModel.find({}).skip(skip).limit(limit);
     return res.status(200).json({results : categories.length, data : categories});
 });
+
+// @desc     Get specific category
+// @route    POST /api/categories/:id
+// @access   public
+exports.getCategory = asyncHandler(async (req , res) => {
+    const {id} = req.params;
+    const category = await CategoryModel.findById(id);
+    if(!category){
+        return res.status(404).json({message : `Category for this id${id} not found`});
+    };
+    return res.status(200).json({data : category});
+});
