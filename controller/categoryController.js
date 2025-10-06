@@ -66,6 +66,6 @@ exports.deleteCategory = asyncHandler(async (req , res) => {
         return res.status(404).json({message : `Category for this id ${id} not found`});
     };
     return res.status(204).json({
-        message : `Category for this id ${id} deleted successfully`
+        message : `Category for this id deleted successfully`
     });
 });
