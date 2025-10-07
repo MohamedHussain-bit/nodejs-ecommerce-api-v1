@@ -19,7 +19,14 @@ if(process.env.NODE_ENV === 'development'){
     console.log(`mode ${process.env.NODE_ENV}`);
 };
 
+// Mount routes
 app.use('/api/categories' , categoryRoutes);
+
+
+// Global error handling middleware
+app.use((err , req , res , next) => {
+    res.status(500).json({err});
+});
 
 mongoose.connection.once('open' , () => {
     console.log('Connected with database successfully');
