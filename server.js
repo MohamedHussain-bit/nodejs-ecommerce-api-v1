@@ -23,6 +23,11 @@ if(process.env.NODE_ENV === 'development'){
 app.use('/api/categories' , categoryRoutes);
 
 
+app.use((req , res , next) => {
+    const err = new Error(`cannot find this route : ${req.originalUrl}`);
+    next(err.message);
+});
+
 // Global error handling middleware
 app.use((err , req , res , next) => {
     res.status(500).json({err});
