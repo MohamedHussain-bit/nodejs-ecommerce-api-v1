@@ -24,8 +24,9 @@ app.use('/api/categories' , categoryRoutes);
 
 
 app.use((req , res , next) => {
-    const err = new Error(`cannot find this route : ${req.originalUrl}`);
-    next(err.message);
+    // const err = new Error(`cannot find this route : ${req.originalUrl}`);
+    // next(err.message);
+    next(new ApiError('message' , statusCode));
 });
 
 // Global error handling middleware
