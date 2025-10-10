@@ -6,6 +6,7 @@ const  mongoose = require('mongoose');
 const connectBD = require('./config/connectDB');
 const categoryRoutes = require('./routes/categoryRoutes')
 const ApiError = require('./utils/apiError');
+const globalError = require('./middlewares/errorMiddleware')
 
 
 const PORT = process.env.PORT || 5000
@@ -31,16 +32,7 @@ app.use((req , res , next) => {
 });
 
 // Global error handling middleware
-app.use((err , req , res , next) => {
-    err.statusCode = err.statusCode || 500;
-    err.status = err.status || 'error';
-    res.status(err.statusCode).json({
-        status : err.status,
-        error : err,
-        message : err.message,
-        stack : err.stack,
-    });
-});
+app.use(globalError);
 
 mongoose.connection.once('open' , () => {
     console.log('Connected with database successfully');
