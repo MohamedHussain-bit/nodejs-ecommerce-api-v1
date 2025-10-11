@@ -36,10 +36,19 @@ app.use(globalError);
 
 mongoose.connection.once('open' , () => {
     console.log('Connected with database successfully');
-    app.listen(PORT , () => {
+    const server = app.listen(PORT , () => {
     console.log(`Server runing on port ${PORT}`);
 });
 });
-mongoose.connection.on('error' , (err) => {
-    console.log(err);
+// mongoose.connection.on('error' , (err) => {
+//     console.log(err);
+// });
+
+// Handel rejection outside express
+process.on("unhandledRejection" , (err) => {
+    console.error(`UnhandledRejectionError : ${err}`);
+    server.close(() => {
+        console.error(`Shutting down.....`);
+        process.exit(1);
+    });
 });
