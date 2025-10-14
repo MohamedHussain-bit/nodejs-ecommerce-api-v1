@@ -2,7 +2,7 @@ const slugify = require('slugify');
 const asyncHandler = require('express-async-handler');
 const SubCategory = require('../models/subCategoryModel');
 
-// @desc     Create subCategory
+// @desc     Create subCategories
 // @route    POST /api/subCategory
 // @access   Private       
 exports.createSubCategory = asyncHandler( async (req , res) => {
