@@ -11,9 +11,9 @@ exports.createSubCategoryValidator = [
         .isLength({max : 35})
         .withMessage('Too long subCategory name'),
     check('category')
-        .isMongoId()
-        .withMessage('Invalide subCategory id')
         .notEmpty()
-        .withMessage('SubCategory must be belong to parent category'),
+        .withMessage('SubCategory must be belong to parent category')
+        .isMongoId()
+        .withMessage('Invalide subCategory id'),
     validatorMiddleware    
 ];
