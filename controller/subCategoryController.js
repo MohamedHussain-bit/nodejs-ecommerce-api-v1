@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const SubCategory = require('../models/subCategoryModel');
 
 // @desc     Create subCategories
-// @route    POST /api/subCategory
+// @route    POST /api/subCategories
 // @access   Private       
 exports.createSubCategory = asyncHandler( async (req , res) => {
     const {name , category} = req.body;
@@ -13,4 +13,15 @@ exports.createSubCategory = asyncHandler( async (req , res) => {
         category
     });
     return res.status(201).json({ data : subCategory});
+});
+
+// @desc     Get all subCategories
+// @route    GET /api/subCategories
+// @access   Public
+exports.getSubCategories = asyncHandler( async (req , res) => {
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 5;
+    const skip = (page - 1) * limit;
+    const subCategories = await SubCategory.find({}).skip(skip).limit(limit);
+    return res.status(200).json({result : subCategories.length , data : subCategories})
 });
