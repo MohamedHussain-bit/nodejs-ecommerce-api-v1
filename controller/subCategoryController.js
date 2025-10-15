@@ -23,5 +23,5 @@ exports.getSubCategories = asyncHandler( async (req , res) => {
     const limit = req.query.limit * 1 || 5;
     const skip = (page - 1) * limit;
     const subCategories = await SubCategory.find({}).skip(skip).limit(limit);
-    return res.status(200).json({result : subCategories.length , data : subCategories})
+    return res.status(200).json({result : subCategories.length , data : subCategories});
 });

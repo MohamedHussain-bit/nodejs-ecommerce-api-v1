@@ -1,7 +1,8 @@
 const express = require('express');
 
 const {
-    createSubCategory
+    createSubCategory,
+    getSubCategories
 } = require('../controller/subCategoryController');
 
 const {
@@ -12,5 +13,6 @@ const router = express.Router();
 
 router.route('/')
     .post(createSubCategoryValidator , createSubCategory)
+    .get(getSubCategories)
 
 module.exports = router;
