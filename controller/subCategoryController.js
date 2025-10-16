@@ -55,3 +55,15 @@ exports.updateSubCategory = asyncHandler( async (req , res , next) => {
     };
     return res.status(200).json({data : subCategory});
 });
+
+// @desc    Delete SubCategory
+// @route   DELETE /api/subCategories/:id
+// @access  Private
+exports.deleteSubCategory = asyncHandler( async (req , res ,next) => {
+    const {id} = req.params;
+    const subCategory = await SubCategory.findByIdAndDelete({_id : id});
+    if(!subCategory){
+        return next(new ApiError(`This SubCategory not found`));
+    };
+    return res.status(204).json({message : `SubCategory for this id not found`});
+});
