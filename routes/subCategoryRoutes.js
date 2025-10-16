@@ -3,12 +3,14 @@ const express = require('express');
 const {
     createSubCategory,
     getSubCategories,
-    getSubCategory
+    getSubCategory,
+    updateSubCategory
 } = require('../controller/subCategoryController');
 
 const {
     createSubCategoryValidator,
-    getSubCategoryValidator
+    getSubCategoryValidator,
+    updateSubCategoyValidator
 } = require('../utils/validatorRoles/subCategoryValidator');
 
 const router = express.Router();
@@ -18,6 +20,7 @@ router.route('/')
     .get(getSubCategories)
 
 router.route('/:id')
-    .get(getSubCategoryValidator , getSubCategory)    
+    .get(getSubCategoryValidator , getSubCategory)
+    .put(updateSubCategoyValidator , updateSubCategory)    
 
 module.exports = router;
