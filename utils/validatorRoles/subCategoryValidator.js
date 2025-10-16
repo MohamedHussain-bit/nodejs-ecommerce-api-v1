@@ -34,3 +34,10 @@ exports.updateSubCategoyValidator = [
         .withMessage(`Category id required`),
     validatorMiddleware    
 ];
+
+exports.deleteCtegoryValidator = [
+    check('id')
+        .isMongoId()
+        .withMessage(`Invalide subCategory id`),
+    validatorMiddleware
+];
