@@ -65,5 +65,5 @@ exports.deleteSubCategory = asyncHandler( async (req , res ,next) => {
     if(!subCategory){
         return next(new ApiError(`This SubCategory not found`));
     };
-    return res.status(204).json({message : `SubCategory for this deleted successfully`});
+    return res.status(200).json({message : `SubCategory for this id deleted successfully`});
 });
