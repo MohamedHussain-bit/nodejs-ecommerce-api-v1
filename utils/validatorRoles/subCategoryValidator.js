@@ -31,6 +31,6 @@ exports.updateSubCategoyValidator = [
         .withMessage(`Invalide SubCategory id`),
     check('category') 
         .isMongoId()
-        .withMessage(`Invalide category id`),
+        .withMessage(`Category id required`),
     validatorMiddleware    
 ];
