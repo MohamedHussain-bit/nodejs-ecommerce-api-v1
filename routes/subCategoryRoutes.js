@@ -15,7 +15,8 @@ const {
     deleteSubCtegoryValidator
 } = require('../utils/validatorRoles/subCategoryValidator');
 
-const router = express.Router();
+// mergeParams : Allow use to access parameters from other routes
+const router = express.Router({mergeParams : true});
 
 router.route('/')
     .post(createSubCategoryValidator , createSubCategory)
