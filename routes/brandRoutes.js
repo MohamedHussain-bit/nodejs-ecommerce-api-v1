@@ -17,6 +17,7 @@ const {
 
 const router = express.Router();
 
-
+router.route('/')
+    .post(createBrandValidator , createBrand)
 
 module.exports = router;
