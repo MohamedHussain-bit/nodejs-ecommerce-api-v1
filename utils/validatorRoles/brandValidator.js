@@ -22,11 +22,13 @@ exports.getBrand = [
 exports.updateBrand = [
     check('id')
         .isMongoId()
-        .withMessage(`Invalide brand Id`)
+        .withMessage(`Invalide brand Id`),
+    validatorMiddleware
 ];
 
 exports.deleteBrand = [
     check('id')
         .isMongoId()
-        .withMessage(`Invalide brand Id`)
+        .withMessage(`Invalide brand Id`),
+    validatorMiddleware    
 ];
