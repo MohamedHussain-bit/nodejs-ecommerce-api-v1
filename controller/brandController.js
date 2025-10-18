@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const slugify = require('slugify');
 const Brand = require('../models/brandModel');
+const ApiError = require('../utils/apiError')
 
 // @desc     Create Brand
 // @route    POST /api/brands
@@ -24,4 +25,16 @@ exports.getBrands = asyncHandler( async (req , res) => {
 
     const brands = await Brand.find({}).skip(skip).limit(limit);
     return res.status(200).json({results : brands.length , data : brands});
+});
+
+// @desc     Get specific brand
+// @route    GET /api/brands/:id
+// @access   Bublic
+exports.getBrand = asyncHandler( async (req , res , next) => {
+    const {id} = req.params;
+    const brand = await Brand.findById({_id : id});
+    if(!brand){
+        return next(new ApiError(`Brand for this id ${id} not found` , 404));
+    };
+    return res.status(200).json({data : brand});
 });
