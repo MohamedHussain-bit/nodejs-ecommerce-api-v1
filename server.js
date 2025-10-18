@@ -6,6 +6,7 @@ const  mongoose = require('mongoose');
 const connectBD = require('./config/connectDB');
 const categoryRoutes = require('./routes/categoryRoutes')
 const subCategoryRoutes = require('./routes/subCategoryRoutes');
+const brandRoutes = require('./routes/brandRoutes');
 const ApiError = require('./utils/apiError');
 const globalError = require('./middlewares/errorMiddleware')
 
@@ -24,7 +25,8 @@ if(process.env.NODE_ENV === 'development'){
 
 // Mount routes
 app.use('/api/categories' , categoryRoutes);
-app.use('/api/subCategories' , subCategoryRoutes)
+app.use('/api/subCategories' , subCategoryRoutes);
+app.use('/api/brands' , brandRoutes);
 
 
 app.use((req , res , next) => {
