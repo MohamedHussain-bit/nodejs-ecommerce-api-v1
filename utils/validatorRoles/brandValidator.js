@@ -18,3 +18,9 @@ exports.getBrand = [
         .withMessage(`Invalide brand Id`),
     validatorMiddleware    
 ];
+
+exports.updateBrand = [
+    check('id')
+        .isMongoId()
+        .withMessage(`Invalide brand Id`)
+];
