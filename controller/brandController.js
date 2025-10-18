@@ -13,3 +13,15 @@ exports.createBrand = asyncHandler( async (req , res) => {
     });
     return res.status(201).json({brand : brand});
 });
+
+// @desc     Get all Brand
+// @route    GET /api/brands
+// @access   Buplic
+exports.getBrands = asyncHandler( async (req , res) => {
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit *1 || 5;
+    const skip = (page - 1) * limit;
+
+    const brands = await Brand.find({}).skip(skip).limit(limit);
+    return res.status(200).json({results : brands.length , data : brands});
+});
