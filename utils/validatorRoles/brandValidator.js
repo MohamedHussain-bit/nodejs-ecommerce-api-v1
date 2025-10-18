@@ -11,3 +11,10 @@ exports.createBrandValidator = [
         .withMessage(`Too long brand name`),
     validatorMiddleware    
 ];
+
+exports.getBrand = [
+    check('id')
+        .isMongoId()
+        .withMessage(`Invalide brand Id`),
+    validatorMiddleware    
+];
