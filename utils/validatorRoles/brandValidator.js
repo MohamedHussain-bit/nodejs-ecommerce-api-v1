@@ -24,3 +24,9 @@ exports.updateBrand = [
         .isMongoId()
         .withMessage(`Invalide brand Id`)
 ];
+
+exports.deleteBrand = [
+    check('id')
+        .isMongoId()
+        .withMessage(`Invalide brand Id`)
+];
