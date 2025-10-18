@@ -38,3 +38,20 @@ exports.getBrand = asyncHandler( async (req , res , next) => {
     };
     return res.status(200).json({data : brand});
 });
+
+// @desc     Update specific brand
+// @route    GET /api/brands/:id
+// @access   Private
+exports.updateBrand = asyncHandler( async (req , res , next) => {
+    const {id} = req.params;
+    const {name} = req.body;
+    const brand = await Brand.findByIdAndUpdate(
+        {_id : id},
+        {name , slug : slugify(name)},
+        {new : true}
+    );
+    if(!brand){
+        return next(new ApiError(`Brand this id ${id} not found` , 404));
+    };
+    return res.status(200).json({data , brand});
+});
