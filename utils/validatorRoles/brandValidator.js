@@ -12,21 +12,21 @@ exports.createBrandValidator = [
     validatorMiddleware    
 ];
 
-exports.getBrand = [
+exports.getBrandValidator = [
     check('id')
         .isMongoId()
         .withMessage(`Invalide brand Id`),
     validatorMiddleware    
 ];
 
-exports.updateBrand = [
+exports.updateBrandValidator = [
     check('id')
         .isMongoId()
         .withMessage(`Invalide brand Id`),
     validatorMiddleware
 ];
 
-exports.deleteBrand = [
+exports.deleteBrandValidator = [
     check('id')
         .isMongoId()
         .withMessage(`Invalide brand Id`),
