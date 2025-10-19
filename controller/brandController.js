@@ -53,7 +53,7 @@ exports.updateBrand = asyncHandler( async (req , res , next) => {
     if(!brand){
         return next(new ApiError(`Brand this id ${id} not found` , 404));
     };
-    return res.status(200).json({data , brand});
+    return res.status(200).json({data : brand});
 });
 
 // @desc     Delete brand
