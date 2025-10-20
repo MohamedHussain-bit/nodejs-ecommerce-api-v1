@@ -34,3 +34,23 @@ exports.getProduct = asyncHandler( async (req , res , next) => {
     };
     return res.status(200).json({data : product});
 });
+
+// @desc     Update specific product
+// @route    Update /api/products/:id
+// @access   Private
+exports.updateProduct = asyncHandler( async (req , res , next) => {
+    const {id} = req.params;
+    req.body.slug = slugify(req.body.title);
+    const product = await Product.findByIdAndUpdate(
+        {_id : id},
+        req.body,
+        {new : true},
+    );
+    if(!product){
+        return next(new ApiError(`Product for this id ${id} not found` , 404));
+    };
+    return res.status(200).json({
+        message : `Product for this id ${id} updated successfully`,
+        data :product,
+    });
+});
