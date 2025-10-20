@@ -36,7 +36,7 @@ exports.getProduct = asyncHandler( async (req , res , next) => {
 });
 
 // @desc     Update specific product
-// @route    Update /api/products/:id
+// @route    UPDATE /api/products/:id
 // @access   Private
 exports.updateProduct = asyncHandler( async (req , res , next) => {
     const {id} = req.params;
@@ -53,4 +53,16 @@ exports.updateProduct = asyncHandler( async (req , res , next) => {
         message : `Product for this id ${id} updated successfully`,
         data :product,
     });
+});
+
+// @desc     Delete product
+// @route    DELETE /api/products/:id
+// @access   Private
+exports.deleteProduct = asyncHandler( async (req , res , next) => {
+    const {id} = req.params;
+    const product = await Product.findByIdAndDelete({_id : id});
+    if(!product){
+        return next(new ApiError(`Product for this id not found` , 404));
+    };
+    return res.status(200).json({message : `Product for this id not found`});
 });
