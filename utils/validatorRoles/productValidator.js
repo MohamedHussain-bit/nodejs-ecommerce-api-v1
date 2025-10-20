@@ -44,15 +44,13 @@ exports.createProductValidation = [
         }),
     check('colors')
         .optional()
-        .toArray()
-        .withMessage('Product color must be array'),
+        .toArray(),
     check('imageCover')
         .notEmpty()
         .withMessage('Product image cover must be required'),
     check('images')
         .optional()
-        .toArray()
-        .withMessage('product images must be array'),
+        .toArray(),
     check('category')
         .notEmpty()
         .withMessage('Product must be belong to category')
