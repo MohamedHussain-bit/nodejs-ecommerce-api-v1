@@ -12,13 +12,25 @@ exports.CreateProduct = asyncHandler( async (req , res) => {
     return res.status(201).json({data : product});
 });
 
-// @desc     Create product
-// @route    POST /api/products
-// @access   Private
+// @desc     Get list of product
+// @route    GET /api/products
+// @access   Public
 exports.getProducts = asyncHandler( async (req , res) => {
     const page = req.query.page * 1 || 1;
     const limit = req.query.limit * 1 || 5;
     const skip = (page - 1) * limit
-    const product = await Product.find({}).skip(skip).limit(limit);
-    return res.status(200).json({results : product.length, page, date : product});
+    const products = await Product.find({}).skip(skip).limit(limit);
+    return res.status(200).json({results : product.length, page, date : products});
+});
+
+// @desc     Get specific product
+// @route    GET /api/products/:id
+// @access   Public
+exports.getProduct = asyncHandler( async (req , res , next) => {
+    const {id} = req.params;
+    const product = await Product.findById({_id : id});
+    if(!product){
+        return next(new ApiError(`Product for this id ${id} not found` , 404));
+    };
+    return res.status(200).json({data : product});
 });
