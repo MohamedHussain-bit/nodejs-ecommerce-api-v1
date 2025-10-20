@@ -28,7 +28,7 @@ if(process.env.NODE_ENV === 'development'){
 app.use('/api/categories' , categoryRoutes);
 app.use('/api/subCategories' , subCategoryRoutes);
 app.use('/api/brands' , brandRoutes);
-app.use('/api/products' , productRoutes)
+app.use('/api/products' , productRoutes);
 
 
 app.use((req , res , next) => {
