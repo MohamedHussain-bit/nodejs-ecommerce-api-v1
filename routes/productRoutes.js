@@ -2,6 +2,7 @@ const express = require('express');
 
 const {
     CreateProduct,
+    getProducts
 } = require('../controller/productController');
 
 const {
@@ -12,5 +13,6 @@ const router = express.Router();
 
 router.route('/')
     .post(createProductValidation , CreateProduct)
+    .get(getProducts)
 
 module.exports = router;
