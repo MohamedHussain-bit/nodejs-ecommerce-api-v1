@@ -87,3 +87,10 @@ exports.getProductValidation = [
         .withMessage('Invalide Id format'),
     validatorMiddleware
 ];
+
+exports.updateProductValidation = [
+    check('id')
+        .isMongoId()
+        .withMessage('Invalide Id format'),
+    validatorMiddleware
+];
