@@ -1,7 +1,7 @@
 const {check} = require('express-validator');
 const validatorMiddleware = require('../../middlewares/validatorMiddleware');
 
-exports.createProductValidator = [
+exports.createProductValidation = [
     check('title')
         .notEmpty()
         .withMessage('Title product is required')
@@ -78,5 +78,12 @@ exports.createProductValidator = [
         .optional()
         .isNumeric()
         .withMessage('Product ratingsQuantity must be number'),
+    validatorMiddleware
+];
+
+exports.getProductValidation = [
+    check('id')
+        .isMongoId()
+        .withMessage('Invalide Id format'),
     validatorMiddleware
 ];
