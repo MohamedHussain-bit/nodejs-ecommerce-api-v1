@@ -4,13 +4,15 @@ const {
     CreateProduct,
     getProducts,
     getProduct,
-    updateProduct
+    updateProduct,
+    deleteProduct
 } = require('../controller/productController');
 
 const {
     createProductValidation,
     getProductValidation,
-    updateProductValidation
+    updateProductValidation,
+    deleteProductValidation
 } = require('../utils/validatorRoles/productValidator');
 
 const router = express.Router();
@@ -22,5 +24,6 @@ router.route('/')
 router.route('/:id')
     .get(getProductValidation , getProduct)
     .put(updateProductValidation , updateProduct)
+    .delete(deleteProductValidation , deleteProduct)
 
 module.exports = router;
