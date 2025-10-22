@@ -64,5 +64,5 @@ exports.deleteProduct = asyncHandler( async (req , res , next) => {
     if(!product){
         return next(new ApiError(`Product for this id not found` , 404));
     };
-    return res.status(200).json({message : `Product for this id not found`});
+    return res.status(200).json({message : `Product for this id deleted successfully`});
 });
