@@ -19,7 +19,10 @@ exports.getProducts = asyncHandler( async (req , res) => {
     const page = req.query.page * 1 || 1;
     const limit = req.query.limit * 1 || 5;
     const skip = (page - 1) * limit
-    const products = await Product.find({}).skip(skip).limit(limit);
+    const products = await Product.find({}).skip(skip).limit(limit).populate({
+        path : 'category',
+        select : 'name -_id'
+    });
     return res.status(200).json({results : products.length, page, date : products});
 });
 
