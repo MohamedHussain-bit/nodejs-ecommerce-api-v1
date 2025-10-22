@@ -13,7 +13,7 @@ exports.createProductValidation = [
     check('description')
         .notEmpty()
         .withMessage('Product description is required')
-        .isLength({min : 2000})
+        .isLength({min : 100})
         .withMessage('Too short product description'),
     check('quantity')
         .notEmpty()
@@ -29,7 +29,7 @@ exports.createProductValidation = [
         .withMessage('Product price is required')
         .isNumeric()
         .withMessage('Product price must be a number')
-        .isLength({max : 20})
+        .isLength({max : 100000})
         .withMessage('Too long product price'),
     check('priceAfterDiscount')
         .optional()

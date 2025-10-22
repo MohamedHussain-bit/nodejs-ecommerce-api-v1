@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema({
     description : {
         type : String,
         required : [true , 'Product description is required'],
-        minlength : [20 , 'Too short description'],
+        minlength : [100 , 'Too short description'],
     },
     quantity : {
         type : Number,
@@ -30,7 +30,7 @@ const productSchema = new mongoose.Schema({
         type : Number,
         trim : true,
         required : [true , 'Product price is required'],
-        max : [20 , 'Too long roduct price'],
+        max : [100000 , 'Too long roduct price'],
     },
     priceAfterDiscount : {
         type : Number,
