@@ -31,7 +31,10 @@ exports.getProducts = asyncHandler( async (req , res) => {
 // @access   Public
 exports.getProduct = asyncHandler( async (req , res , next) => {
     const {id} = req.params;
-    const product = await Product.findById({_id : id});
+    const product = await Product.findById({_id : id}).populate({
+        path : 'category',
+        select : 'name -_id'
+    });
     if(!product){
         return next(new ApiError(`Product for this id ${id} not found` , 404));
     };
