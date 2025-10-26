@@ -1,6 +1,7 @@
 const {check} = require('express-validator');
 const validatorMiddleware = require('../../middlewares/validatorMiddleware');
 const Category = require('../../models/CategoryModel');
+const SubCategory = require('../../models/subCategoryModel');
 
 exports.createProductValidation = [
     check('title')
@@ -62,10 +63,10 @@ exports.createProductValidation = [
                 return Promise.reject(new Error(`No category for this id ${categoryId}`))
             };
         })),
-    check('subCategory')
+    check('subCategories')
         .optional()
-        .isMongoId()
-        .withMessage('Product supCategory invalide Id'),
+        .isArray()
+        .withMessage('Product supCategory must be array Id'),
     check('brand')
         .optional()
         .isMongoId()
