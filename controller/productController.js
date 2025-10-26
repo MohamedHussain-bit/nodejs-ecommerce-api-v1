@@ -16,13 +16,21 @@ exports.CreateProduct = asyncHandler( async (req , res) => {
 // @route    GET /api/products
 // @access   Public
 exports.getProducts = asyncHandler( async (req , res) => {
+    // Filtration
+    const queryStringObj = {...req.query};
+    const excludesFields = ['page' , 'limit' , 'sort'];
+    excludesFields.forEach((fild) => delete queryStringObj[fild]);
+    // pagination
     const page = req.query.page * 1 || 1;
     const limit = req.query.limit * 1 || 5;
     const skip = (page - 1) * limit
-    const products = await Product.find({}).skip(skip).limit(limit).populate({
+    // Build query
+    const mongooseQuery = Product.find(queryStringObj).skip(skip).limit(limit).populate({
         path : 'category',
         select : 'name -_id'
     });
+    // Execute query
+    const products = await mongooseQuery;
     return res.status(200).json({results : products.length, page, date : products});
 });
 
