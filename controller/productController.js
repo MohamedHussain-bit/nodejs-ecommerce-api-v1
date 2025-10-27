@@ -45,7 +45,15 @@ exports.getProducts = asyncHandler( async (req , res) => {
         mongooseQuery = mongooseQuery.select(filds);
     }else{
         mongooseQuery = mongooseQuery.select('-__v');
-    }
+    };
+
+    if(req.query.keyWord){
+        const query = {};
+        query.$or = [
+            {title : {$regex : req.query.keyWord , $options : 'i'}},
+            {description : {$regex : req.query.keyWord , $options : 'i'}}
+        ]
+    };
     // Execute query
     const products = await mongooseQuery;
     return res.status(200).json({results : products.length, page, date : products});
