@@ -39,6 +39,13 @@ exports.getProducts = asyncHandler( async (req , res) => {
     }else {
         mongooseQuery = mongooseQuery.sort('-createdAt')
     };
+
+    if(req.query.filds){
+        const filds = req.query.filds.split(',').join(' ');
+        mongooseQuery = mongooseQuery.select(filds);
+    }else{
+        mongooseQuery = mongooseQuery.select('-__v');
+    }
     // Execute query
     const products = await mongooseQuery;
     return res.status(200).json({results : products.length, page, date : products});
