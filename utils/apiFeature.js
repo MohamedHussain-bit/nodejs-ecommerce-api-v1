@@ -48,8 +48,8 @@ class ApiFeatures {
     };
 
     paginate(){
-        const page = req.query.page * 1 || 1;
-        const limit = req.query.limit * 1 || 5;
+        const page = this.queryStrig.page * 1 || 1;
+        const limit =this.queryStrig.limit * 1 || 5;
         const skip = (page - 1) * limit;
 
         this.mongooseQuery = this.mongooseQuery.skip(skip).limit(limit);
