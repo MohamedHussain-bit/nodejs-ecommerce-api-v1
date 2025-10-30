@@ -1,7 +1,8 @@
 const asyncHandler = require('express-async-handler');
 const slugify = require('slugify');
 const Brand = require('../models/brandModel');
-const ApiError = require('../utils/apiError')
+const ApiError = require('../utils/apiError');
+const ApiFeatures = require('../utils/apiFeature');
 
 // @desc     Create Brand
 // @route    POST /api/brands
@@ -19,12 +20,21 @@ exports.createBrand = asyncHandler( async (req , res) => {
 // @route    GET /api/brands
 // @access   Buplic
 exports.getBrands = asyncHandler( async (req , res) => {
-    const page = req.query.page * 1 || 1;
-    const limit = req.query.limit *1 || 5;
-    const skip = (page - 1) * limit;
+    // const page = req.query.page * 1 || 1;
+    // const limit = req.query.limit *1 || 5;
+    // const skip = (page - 1) * limit;
+    const documentCounts = await Brand.countDocuments()
+    const apiFeatures = new ApiFeatures(Brand.find() , req.query)
+        .paginate(documentCounts)
+        .filter()
+        .limitFildes()
+        .search()
+        .sort()
 
-    const brands = await Brand.find({}).skip(skip).limit(limit);
-    return res.status(200).json({results : brands.length, page , data : brands});
+    const {paginationResult , mongooseQuery} = apiFeatures
+    const brands = await mongooseQuery;
+    // const brands = await Brand.find({}).skip(skip).limit(limit);
+    return res.status(200).json({results : brands.length, paginationResult , data : brands});
 });
 
 // @desc     Get specific brand

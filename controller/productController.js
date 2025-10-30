@@ -35,7 +35,7 @@ exports.getProducts = asyncHandler( async (req , res) => {
         .paginate(documentCounts)
         .filter()
         .limitFildes()
-        .search()
+        .search('products')
         .sort()
 
     // Build query

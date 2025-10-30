@@ -35,13 +35,17 @@ class ApiFeatures {
         return this;
     };
 
-    search(){
+    search(modelName){
         if(this.queryStrig.keyWord){
-            const query = {};
-            query.$or = [
+            let query = {};
+            if(modelName === 'products'){
+                query.$or = [
                 {title : {$regex : this.queryStrig.keyWord , $options : 'i'}},
                 {description : {$regex : this.queryStrig.keyWord , $options : 'i'}}
             ]
+            }else{
+                query = {name : {$regex : this.queryStrig.keyWord , $options : 'i'}}
+            }
             this.mongooseQuery = this.mongooseQuery.find(query);
         };
         return this;
