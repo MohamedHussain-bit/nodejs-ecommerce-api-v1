@@ -30,9 +30,9 @@ exports.getProducts = asyncHandler( async (req , res) => {
     // const page = req.query.page * 1 || 1;
     // const limit = req.query.limit * 1 || 5;
     // const skip = (page - 1) * limit
-
+    const documentCounts = await Product.countDocuments()
     const apiFeatures = new ApiFeatures(Product.find() , req.query)
-        .paginate()
+        .paginate(documentCounts)
         .filter()
         .limitFildes()
         .search()
@@ -69,8 +69,9 @@ exports.getProducts = asyncHandler( async (req , res) => {
     //     ]
     // };
     // Execute query
-    const products = await apiFeatures.mongooseQuery;
-    return res.status(200).json({results : products.length, date : products});
+    const {paginationResult , mongooseQuery} = apiFeatures
+    const products = await mongooseQuery;
+    return res.status(200).json({results : products.length , paginationResult , date : products});
 });
 
 // @desc     Get specific product

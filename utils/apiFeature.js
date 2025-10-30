@@ -47,12 +47,29 @@ class ApiFeatures {
         return this;
     };
 
-    paginate(){
+    paginate(countDocument){
         const page = this.queryStrig.page * 1 || 1;
         const limit =this.queryStrig.limit * 1 || 5;
         const skip = (page - 1) * limit;
+        const endIndex = page * limit;
+
+        // pagination result
+        const pagination = {};
+        pagination.currentPage = page;
+        pagination.limit = limit;
+        pagination.numberOfBages = Math.ceil(countDocument / limit);
+
+        // next page
+        if(endIndex < countDocument){
+            pagination.next = page + 1;
+        }
+        // last page
+        if(skip > 0){
+            pagination.prev = page - 1;
+        }
 
         this.mongooseQuery = this.mongooseQuery.skip(skip).limit(limit);
+        this.paginationResult = pagination;
         return this;
     };
 };
