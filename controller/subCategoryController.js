@@ -60,7 +60,7 @@ exports.getSubCategories = asyncHandler( async (req , res) => {
 // @access   Private 
 exports.getSubCategory = asyncHandler( async (req , res , next) => {
     const {id} = req.params;
-    const subCategory = await SubCategory.find({_id : id});
+    const subCategory = await SubCategory.findById({_id : id});
     if(!subCategory){
         return next(new ApiError(`SubCategory for this id ${id} not found` , 404));
     }

@@ -42,14 +42,15 @@ exports.getBrands = asyncHandler( async (req , res) => {
 // @desc     Get specific brand
 // @route    GET /api/brands/:id
 // @access   Bublic
-exports.getBrand = asyncHandler( async (req , res , next) => {
-    const {id} = req.params;
-    const brand = await Brand.findById({_id : id});
-    if(!brand){
-        return next(new ApiError(`Brand for this id ${id} not found` , 404));
-    };
-    return res.status(200).json({data : brand});
-});
+// exports.getBrand = asyncHandler( async (req , res , next) => {
+//     const {id} = req.params;
+//     const brand = await Brand.findById(id);
+//     if(!brand){
+//         return next(new ApiError(`Brand for this id ${id} not found` , 404));
+//     };
+//     return res.status(200).json({data : brand});
+// });
+exports.getBrand = factory.getOne(Brand);
 
 // @desc     Update specific brand
 // @route    UPDATE /api/brands/:id

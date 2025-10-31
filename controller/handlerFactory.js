@@ -28,3 +28,12 @@ exports.createOne = (Model) => asyncHandler( async (req , res) => {
     const document = await Model.create(req.body);
     return res.status(201).json({document : document});
 });
+
+exports.getOne = (Model) => asyncHandler( async (req , res , next) => {
+    const {id} = req.params;
+    const document = await Model.findById(id);
+    if(!document){
+        return next(new ApiError(`Document for this id ${id} not found` , 404));
+    };
+    return res.status(200).json({data : document});
+});
