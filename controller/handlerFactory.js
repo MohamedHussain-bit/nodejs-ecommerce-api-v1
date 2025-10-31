@@ -11,3 +11,15 @@ exports.deleteOne = (Model) => asyncHandler( async (req , res , next) => {
     };
     return res.status(200).json({Message : `Document for this id deleted successfully`});
     });
+
+exports.updateOne = (Model) => asyncHandler( async (req , res , next) => {
+    const document = await Model.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {new : true}
+    );
+    if(!document){
+        return next(new ApiError(`Document for this id ${id} not found` , 404));
+    };
+    return res.status(200).json({data : document});
+});
