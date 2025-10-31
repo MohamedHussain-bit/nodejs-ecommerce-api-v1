@@ -2,7 +2,8 @@ const slugify = require('slugify');
 const asyncHandler = require('express-async-handler');
 const Category = require('../models/CategoryModel');
 const ApiError = require('../utils/apiError');
-const ApiFeatures = require('../utils/apiFeature')
+const ApiFeatures = require('../utils/apiFeature');
+const factory = require('./handlerFactory');
 
 // @desc      Create category
 // @route     POST /api/categories
@@ -73,14 +74,15 @@ exports.updateCategory = asyncHandler(async (req , res , next) => {
 // @desc     Delete specific category
 // @route    DELETE /api/categories/:id
 // @access   Private
-exports.deleteCategory = asyncHandler(async (req , res , next) => {
-    const {id} = req.params;
-    const category = await Category.findByIdAndDelete(id);
-    if(!category){
-        // return res.status(404).json({message : `Category for this id ${id} not found`});
-        return next(new ApiError(`Category for this id ${id} not found` , 404));
-    };
-    return res.status(204).json({
-        message : `Category for this id deleted successfully`
-    });
-});
+// exports.deleteCategory = asyncHandler(async (req , res , next) => {
+//     const {id} = req.params;
+//     const category = await Category.findByIdAndDelete(id);
+//     if(!category){
+//         // return res.status(404).json({message : `Category for this id ${id} not found`});
+//         return next(new ApiError(`Category for this id ${id} not found` , 404));
+//     };
+//     return res.status(204).json({
+//         message : `Category for this id deleted successfully`
+//     });
+// });
+exports.deleteCategory = factory.deleteOne(Category);
