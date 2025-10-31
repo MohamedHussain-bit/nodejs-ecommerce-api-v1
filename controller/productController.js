@@ -79,17 +79,18 @@ exports.getProducts = asyncHandler( async (req , res) => {
 // @desc     Get specific product
 // @route    GET /api/products/:id
 // @access   Public
-exports.getProduct = asyncHandler( async (req , res , next) => {
-    const {id} = req.params;
-    const product = await Product.findById({_id : id}).populate({
-        path : 'category',
-        select : 'name -_id'
-    });
-    if(!product){
-        return next(new ApiError(`Product for this id ${id} not found` , 404));
-    };
-    return res.status(200).json({data : product});
-});
+// exports.getProduct = asyncHandler( async (req , res , next) => {
+//     const {id} = req.params;
+//     const product = await Product.findById({_id : id}).populate({
+//         path : 'category',
+//         select : 'name -_id'
+//     });
+//     if(!product){
+//         return next(new ApiError(`Product for this id ${id} not found` , 404));
+//     };
+//     return res.status(200).json({data : product});
+// });
+exports.getProduct = factory.getOne(Product);
 
 // @desc     Update specific product
 // @route    UPDATE /api/products/:id
