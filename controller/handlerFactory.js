@@ -37,3 +37,18 @@ exports.getOne = (Model) => asyncHandler( async (req , res , next) => {
     };
     return res.status(200).json({data : document});
 });
+
+exports.getList = (Model) => asyncHandler( async (req , res) => {
+
+    const documentCounts = await Model.countDocuments()
+    const apiFeatures = new ApiFeatures(Model.find() , req.query)
+        .paginate(documentCounts)
+        .filter()
+        .limitFildes()
+        .search()
+        .sort()
+
+    const {paginationResult , mongooseQuery} = apiFeatures;
+    const document = await mongooseQuery;
+    return res.status(200).json({results : document.length, paginationResult , data : document});
+});

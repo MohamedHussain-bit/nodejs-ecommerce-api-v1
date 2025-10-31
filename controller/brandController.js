@@ -21,23 +21,24 @@ exports.createBrand = factory.createOne(Brand);
 // @desc     Get all Brand
 // @route    GET /api/brands
 // @access   Buplic
-exports.getBrands = asyncHandler( async (req , res) => {
-    // const page = req.query.page * 1 || 1;
-    // const limit = req.query.limit *1 || 5;
-    // const skip = (page - 1) * limit;
-    const documentCounts = await Brand.countDocuments()
-    const apiFeatures = new ApiFeatures(Brand.find() , req.query)
-        .paginate(documentCounts)
-        .filter()
-        .limitFildes()
-        .search()
-        .sort()
+// exports.getBrands = asyncHandler( async (req , res) => {
+//      const page = req.query.page * 1 || 1;
+//      const limit = req.query.limit *1 || 5;
+//      const skip = (page - 1) * limit;
+//     const documentCounts = await Brand.countDocuments()
+//     const apiFeatures = new ApiFeatures(Brand.find() , req.query)
+//         .paginate(documentCounts)
+//         .filter()
+//         .limitFildes()
+//         .search()
+//         .sort()
 
-    const {paginationResult , mongooseQuery} = apiFeatures
-    const brands = await mongooseQuery;
-    // const brands = await Brand.find({}).skip(skip).limit(limit);
-    return res.status(200).json({results : brands.length, paginationResult , data : brands});
-});
+//     const {paginationResult , mongooseQuery} = apiFeatures
+//     const brands = await mongooseQuery;
+//      const brands = await Brand.find({}).skip(skip).limit(limit);
+//     return res.status(200).json({results : brands.length, paginationResult , data : brands});
+// });
+exports.getBrands = factory.getList(Brand);
 
 // @desc     Get specific brand
 // @route    GET /api/brands/:id
