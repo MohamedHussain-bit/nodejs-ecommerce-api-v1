@@ -58,14 +58,15 @@ exports.getSubCategories = asyncHandler( async (req , res) => {
 // @desc     Get specific subCategory
 // @route    GET /api/subCategories/id
 // @access   Private 
-exports.getSubCategory = asyncHandler( async (req , res , next) => {
-    const {id} = req.params;
-    const subCategory = await SubCategory.findById({_id : id});
-    if(!subCategory){
-        return next(new ApiError(`SubCategory for this id ${id} not found` , 404));
-    }
-    return res.status(200).json({data : subCategory})
-});
+// exports.getSubCategory = asyncHandler( async (req , res , next) => {
+//     const {id} = req.params;
+//     const subCategory = await SubCategory.findById({_id : id});
+//     if(!subCategory){
+//         return next(new ApiError(`SubCategory for this id ${id} not found` , 404));
+//     }
+//     return res.status(200).json({data : subCategory})
+// });
+exports.getSubCategory = factory.getOne(SubCategory);
 
 // @desc     Update SubCategry
 // @route    PUT /api/subCategories/id
