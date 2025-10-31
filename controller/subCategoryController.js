@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler');
 const SubCategory = require('../models/subCategoryModel');
 const ApiError = require('../utils/apiError');
 const ApiFeatures = require('../utils/apiFeature');
+const factory = require('./handlerFactory');
 
 // Nested route to create subCategory from category
 exports.setCategoryIdToBody = asyncHandler(async (req , res , next) =>{
@@ -85,11 +86,12 @@ exports.updateSubCategory = asyncHandler( async (req , res , next) => {
 // @desc    Delete SubCategory
 // @route   DELETE /api/subCategories/:id
 // @access  Private
-exports.deleteSubCategory = asyncHandler( async (req , res ,next) => {
-    const {id} = req.params;
-    const subCategory = await SubCategory.findByIdAndDelete({_id : id});
-    if(!subCategory){
-        return next(new ApiError(`This SubCategory not found`));
-    };
-    return res.status(200).json({message : `SubCategory for this id deleted successfully`});
-});
+// exports.deleteSubCategory = asyncHandler( async (req , res ,next) => {
+//     const {id} = req.params;
+//     const subCategory = await SubCategory.findByIdAndDelete({_id : id});
+//     if(!subCategory){
+//         return next(new ApiError(`This SubCategory not found`));
+//     };
+//     return res.status(200).json({message : `SubCategory for this id deleted successfully`});
+// });
+exports.deleteSubCategory = factory.deleteOne(SubCategory);
