@@ -21,23 +21,24 @@ exports.createCategory = factory.createOne(Category);
 // @desc     Get categories
 // @route    GET /api/categories
 // @access   Public
-exports.getCategories = asyncHandler(async (req , res) => {
-    // const page = req.query.page * 1 || 1;
-    // const limit = req.query.limit *1 || 5;
-    // const skip = (page - 1) * limit;
-    // const categories = await Category.find({}).skip(skip).limit(limit);
-        const documentCounts = await Category.countDocuments()
-        const apiFeatures = new ApiFeatures(Category.find() , req.query)
-            .paginate(documentCounts)
-            .filter()
-            .limitFildes()
-            .search()
-            .sort()
-    
-        const {paginationResult , mongooseQuery} = apiFeatures
-        const categories = await mongooseQuery;
-    return res.status(200).json({results : categories.length, paginationResult , data : categories});
-});
+// exports.getCategories = asyncHandler(async (req , res) => {
+//     // const page = req.query.page * 1 || 1;
+//     // const limit = req.query.limit *1 || 5;
+//     // const skip = (page - 1) * limit;
+//     // const categories = await Category.find({}).skip(skip).limit(limit);
+//         const documentCounts = await Category.countDocuments()
+//         const apiFeatures = new ApiFeatures(Category.find() , req.query)
+//             .paginate(documentCounts)
+//             .filter()
+//             .limitFildes()
+//             .search()
+//             .sort()
+
+//         const {paginationResult , mongooseQuery} = apiFeatures
+//         const categories = await mongooseQuery;
+//     return res.status(200).json({results : categories.length, paginationResult , data : categories});
+// });
+exports.getCategories = factory.getList(Category);
 
 // @desc     Get specific category
 // @route    POST /api/categories/:id
