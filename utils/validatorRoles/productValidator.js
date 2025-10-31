@@ -12,7 +12,11 @@ exports.createProductValidation = [
         .isLength({min : 3})
         .withMessage('Too short title product')
         .isLength({max : 30})
-        .withMessage('Too long product title'),
+        .withMessage('Too long product title')
+        .custom((value , {req}) => {
+            req.body.slug = slugify(value);
+            return true;
+        }),
     check('description')
         .notEmpty()
         .withMessage('Product description is required')
