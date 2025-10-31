@@ -23,3 +23,8 @@ exports.updateOne = (Model) => asyncHandler( async (req , res , next) => {
     };
     return res.status(200).json({data : document});
 });
+
+exports.createOne = (Model) => asyncHandler( async (req , res) => {
+    const document = await Model.create(req.body);
+    return res.status(201).json({document : document});
+});
