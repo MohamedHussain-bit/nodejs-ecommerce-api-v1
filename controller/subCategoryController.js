@@ -14,15 +14,16 @@ exports.setCategoryIdToBody = asyncHandler(async (req , res , next) =>{
 // @desc     Create subCategories
 // @route    POST /api/subCategories
 // @access   Private       
-exports.createSubCategory = asyncHandler( async (req , res) => {
-    const {name , category} = req.body;
-    const subCategory = await SubCategory.create({
-        name,
-        slug : slugify(name),
-        category
-    });
-    return res.status(201).json({ data : subCategory});
-});
+// exports.createSubCategory = asyncHandler( async (req , res) => {
+//     const {name , category} = req.body;
+//     const subCategory = await SubCategory.create({
+//         name,
+//         slug : slugify(name),
+//         category
+//     });
+//     return res.status(201).json({ data : subCategory});
+// });
+exports.createSubCategory = factory.createOne(SubCategory);
 
 // Nested Route
 // GET /api/categories/:categoryId/subCategry
