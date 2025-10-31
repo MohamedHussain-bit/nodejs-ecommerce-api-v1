@@ -1,5 +1,6 @@
-const {check} = require('express-validator');
+const {check, body} = require('express-validator');
 const validatorMiddleware = require('../../middlewares/validatorMiddleware');
+const { default: slugify } = require('slugify');
 
 exports.createCategoryValidator = [
     check('name')
@@ -18,7 +19,14 @@ exports.getCategoryValidator = [
 ];
 
 exports.updateCategoryValidator = [
-    check('id').isMongoId().withMessage('Invalied category id'),
+    check('id')
+        .isMongoId()
+        .withMessage('Invalied category id'),
+    body('name')
+        .custom((value , {req}) => {
+            req.body.slug = slugify(value);
+            return true;
+        }),   
     validatorMiddleware
 ];
 

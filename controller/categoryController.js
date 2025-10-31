@@ -54,22 +54,23 @@ exports.getCategory = asyncHandler(async (req , res , next) => {
 // @desc     Update specific category
 // @route    PUT /api/categories/:id
 // @access   Private
-exports.updateCategory = asyncHandler(async (req , res , next) => {
-    const {id} = req.params;
-    const {name} = req.body;
-    const category = await Category.findByIdAndUpdate(
-        {_id : id},
-        {name , slug : slugify(name)}, 
-        {new : true});
-    if(!category){
-        // return res.status(404).json({message : `Catgory for this id ${id} not found`});
-        return next(new ApiError(`Catgory for this id ${id} not found` , 404));
-    };
-    return res.status(200).json({
-        message : `Category for this id ${id} updated successfully`,
-        date : category
-    });
-});
+// exports.updateCategory = asyncHandler(async (req , res , next) => {
+//     const {id} = req.params;
+//     const {name} = req.body;
+//     const category = await Category.findByIdAndUpdate(
+//         {_id : id},
+//         {name , slug : slugify(name)}, 
+//         {new : true});
+//     if(!category){
+//         // return res.status(404).json({message : `Catgory for this id ${id} not found`});
+//         return next(new ApiError(`Catgory for this id ${id} not found` , 404));
+//     };
+//     return res.status(200).json({
+//         message : `Category for this id ${id} updated successfully`,
+//         date : category
+//     });
+// });
+exports.updateCategory = factory.updateOne(Category);
 
 // @desc     Delete specific category
 // @route    DELETE /api/categories/:id
