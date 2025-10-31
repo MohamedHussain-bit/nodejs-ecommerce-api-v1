@@ -42,15 +42,16 @@ exports.getCategories = asyncHandler(async (req , res) => {
 // @desc     Get specific category
 // @route    POST /api/categories/:id
 // @access   Private
-exports.getCategory = asyncHandler(async (req , res , next) => {
-    const {id} = req.params;
-    const category = await Category.findById(id);
-    if(!category){
-        // return res.status(404).json({message : `Category for this id ${id} not found`});
-        return next(new ApiError(`Category for this id ${id} not found` , 404));
-    };
-    return res.status(200).json({data : category});
-});
+// exports.getCategory = asyncHandler(async (req , res , next) => {
+//     const {id} = req.params;
+//     const category = await Category.findById(id);
+//     if(!category){
+//         // return res.status(404).json({message : `Category for this id ${id} not found`});
+//         return next(new ApiError(`Category for this id ${id} not found` , 404));
+//     };
+//     return res.status(200).json({data : category});
+// });
+exports.getCategory = factory.getOne(Category);
 
 // @desc     Update specific category
 // @route    PUT /api/categories/:id
