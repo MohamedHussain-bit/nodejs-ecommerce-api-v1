@@ -38,14 +38,17 @@ exports.getOne = (Model) => asyncHandler( async (req , res , next) => {
     return res.status(200).json({data : document});
 });
 
-exports.getList = (Model) => asyncHandler( async (req , res) => {
-
+exports.getList = (Model , modelName = '') => asyncHandler( async (req , res) => {
+    let filter = {};
+    if(req.filterObj){
+        filter = req.filterObj
+    };
     const documentCounts = await Model.countDocuments()
-    const apiFeatures = new ApiFeatures(Model.find() , req.query)
+    const apiFeatures = new ApiFeatures(Model.find(filter) , req.query)
         .paginate(documentCounts)
         .filter()
         .limitFildes()
-        .search()
+        .search(modelName)
         .sort()
 
     const {paginationResult , mongooseQuery} = apiFeatures;

@@ -43,7 +43,7 @@ exports.createFilterObject = asyncHandler( async (req , res , next) => {
 //     // const skip = (page - 1) * limit;
 //     // const subCategories = await SubCategory.find(req.filterObj).skip(skip).limit(limit);
 //     const documentCounts = await SubCategory.countDocuments()
-//     const apiFeatures = new ApiFeatures(SubCategory.find() , req.query)
+//     const apiFeatures = new ApiFeatures(SubCategory.find(req.filterObj) , req.query)
 //         .paginate(documentCounts)
 //         .filter()
 //         .limitFildes()

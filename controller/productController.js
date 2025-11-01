@@ -75,7 +75,7 @@ exports.CreateProduct = factory.createOne(Product);
 //     const products = await mongooseQuery;
 //     return res.status(200).json({results : products.length , paginationResult , date : products});
 // });
-exports.getProducts = factory.getList(Product);
+exports.getProducts = factory.getList(Product , 'Products');
 
 // @desc     Get specific product
 // @route    GET /api/products/:id
