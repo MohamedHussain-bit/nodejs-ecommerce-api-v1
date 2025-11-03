@@ -11,14 +11,22 @@ const multerStorage = multer.diskStorage({
     destination : (req , file , cb) => {
         cb(null , 'uploads/categories');
     },
-    filename : (req , file , cd) => {
+    filename : (req , file , cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         const fileExtension = path.extname(file.originalname);
-        cd(null , uniqueSuffix + fileExtension);
+        cb(null , uniqueSuffix + fileExtension);
     }
 });
 
-const upload = multer({storage : multerStorage});
+const multerFilter = (req , file , cb) => {
+    if(file.mimetype.startsWith('image')){
+        cb(null , true);
+    } else {
+        cb(new ApiError('Only image allowed' , 400) , false);
+    };
+};
+
+const upload = multer({storage : multerStorage , fileFilter : multerFilter});
 
 exports.uploadCategoryImage = upload.single('image');
 
