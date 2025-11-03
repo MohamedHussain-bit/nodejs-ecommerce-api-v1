@@ -1,4 +1,3 @@
-const multer = require('multer');
 const express = require('express');
 const {
         getCategoryValidator,
@@ -11,10 +10,9 @@ const {
         getCategories,
         getCategory,
         updateCategory,
-        deleteCategory
+        deleteCategory,
+        uploadCategoryImage
     } = require('../controller/categoryController');
-
-const upload = multer({dest : 'uploads/categories'});
 
 const subCategoriesRoute = require('./subCategoryRoutes');    
 
@@ -23,12 +21,7 @@ const router = express.Router();
 router.use('/:categoryId/subCategories' , subCategoriesRoute)
 
 router.route('/')
-    .post(upload.single('image'),
-    (req , res , next) => {
-        console.log(req.file);
-        next();
-    }
-    ,createCategoryValidator , createCategory)
+    .post(uploadCategoryImage ,createCategoryValidator , createCategory)
     .get(getCategories)
 
 router.route('/:id')

@@ -4,6 +4,23 @@ const Category = require('../models/CategoryModel');
 const ApiError = require('../utils/apiError');
 const ApiFeatures = require('../utils/apiFeature');
 const factory = require('./handlerFactory');
+const multer = require('multer');
+const path = require('path')
+
+const multerStorage = multer.diskStorage({
+    destination : (req , file , cb) => {
+        cb(null , 'uploads/categories');
+    },
+    filename : (req , file , cd) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const fileExtension = path.extname(file.originalname);
+        cd(null , uniqueSuffix + fileExtension);
+    }
+});
+
+const upload = multer({storage : multerStorage});
+
+exports.uploadCategoryImage = upload.single('image');
 
 // @desc      Create category
 // @route     POST /api/categories
