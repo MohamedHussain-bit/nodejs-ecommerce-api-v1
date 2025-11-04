@@ -43,6 +43,8 @@ exports.resizeImage = asyncHandler(async (req , res , next) => {
         .toFormat('jpeg')
         .jpeg({quality : 90})
         .toFile(`uploads/categories/${filename}`)
+
+    req.body.image = filename;
     next();
 });
 
