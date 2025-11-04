@@ -4,6 +4,25 @@ const Brand = require('../models/brandModel');
 const ApiError = require('../utils/apiError');
 const ApiFeatures = require('../utils/apiFeature');
 const factory = require('./handlerFactory');
+const sharp = require('sharp');
+const {uploadSingleImage} = require('../middlewares/uploadImageMiddleware');
+
+// upload single image
+exports.uploadBrandImage = uploadSingleImage('image');
+
+// Image processing
+exports.resizeImage = asyncHandler(async (req , res , next) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const filename = `${uniqueSuffix}.jpeg`;
+    await sharp(req.file.buffer)
+        .resize(600 , 600)
+        .toFormat('jpeg')
+        .jpeg({quality : 90})
+        .toFile(`uploads/brands/${filename}`)
+
+    req.body.image = filename;
+    next();
+});
 
 // @desc     Create Brand
 // @route    POST /api/brands
