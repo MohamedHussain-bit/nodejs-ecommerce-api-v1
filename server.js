@@ -1,3 +1,5 @@
+const path = require('path');
+
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
@@ -16,6 +18,7 @@ const PORT = process.env.PORT || 5000
 
 const app = express();
 app.use(express.json())
+app.use(express.static(path.join(__dirname , 'uploads')));
 
 connectBD()
 
