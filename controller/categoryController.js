@@ -7,6 +7,7 @@ const factory = require('./handlerFactory');
 const multer = require('multer');
 const path = require('path')
 const sharp = require('sharp');
+const {uploadSingleImage} = require('../middlewares/uploadImageMiddleware');
 
 // DiskStorage engin
 // const multerStorage = multer.diskStorage({
@@ -21,19 +22,19 @@ const sharp = require('sharp');
 // });
 
 // Memory Storage engine
-const multerStorage = multer.memoryStorage();
+// const multerStorage = multer.memoryStorage();
 
-const multerFilter = (req , file , cb) => {
-    if(file.mimetype.startsWith('image')){
-        cb(null , true);
-    } else {
-        cb(new ApiError('Only image allowed' , 400) , false);
-    };
-};
+// const multerFilter = (req , file , cb) => {
+//     if(file.mimetype.startsWith('image')){
+//         cb(null , true);
+//     } else {
+//         cb(new ApiError('Only image allowed' , 400) , false);
+//     };
+// };
 
-const upload = multer({storage : multerStorage , fileFilter : multerFilter});
+// const upload = multer({storage : multerStorage , fileFilter : multerFilter});
 
-exports.uploadCategoryImage = upload.single('image');
+exports.uploadCategoryImage = uploadSingleImage('image');
 
 exports.resizeImage = asyncHandler(async (req , res , next) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
