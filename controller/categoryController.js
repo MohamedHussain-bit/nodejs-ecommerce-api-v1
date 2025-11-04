@@ -6,17 +6,22 @@ const ApiFeatures = require('../utils/apiFeature');
 const factory = require('./handlerFactory');
 const multer = require('multer');
 const path = require('path')
+const sharp = require('sharp');
 
-const multerStorage = multer.diskStorage({
-    destination : (req , file , cb) => {
-        cb(null , 'uploads/categories');
-    },
-    filename : (req , file , cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const fileExtension = path.extname(file.originalname);
-        cb(null , uniqueSuffix + fileExtension);
-    }
-});
+// DiskStorage engin
+// const multerStorage = multer.diskStorage({
+//     destination : (req , file , cb) => {
+//         cb(null , 'uploads/categories');
+//     },
+//     filename : (req , file , cb) => {
+//         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+//         const fileExtension = path.extname(file.originalname);
+//         cb(null , uniqueSuffix + fileExtension);
+//     }
+// });
+
+// Memory Storage engine
+const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req , file , cb) => {
     if(file.mimetype.startsWith('image')){
@@ -29,6 +34,17 @@ const multerFilter = (req , file , cb) => {
 const upload = multer({storage : multerStorage , fileFilter : multerFilter});
 
 exports.uploadCategoryImage = upload.single('image');
+
+exports.resizeImage = asyncHandler(async (req , res , next) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const filename = `${uniqueSuffix}.jpeg`;
+    await sharp(req.file.buffer)
+        .resize(600 , 600)
+        .toFormat('jpeg')
+        .jpeg({quality : 90})
+        .toFile(`uploads/categories/${filename}`)
+    next();
+});
 
 // @desc      Create category
 // @route     POST /api/categories
