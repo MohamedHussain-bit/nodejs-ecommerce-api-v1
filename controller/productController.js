@@ -39,6 +39,25 @@ exports.resizeProductImage = asyncHandler(async (req , res , next) => {
 
             req.body.imageCover = imageCoverFilename;
     };
+    // Images pocessing
+    if(req.files.images){
+        req.body.images = [];
+        await Promise.all(
+            req.files.images.map( async (images , index) => {
+                const uniqueSuffix = Date.now()+'-'+Math.round(Math.random() * 1E9);
+                const imagesName = `${uniqueSuffix}-${index + 1}.jpeg`;
+
+                await sharp(images.buffer)
+                    .resize(2000 , 1333)
+                    .toFormat('jpeg')
+                    .jpeg({quality : 90})
+                    .toFile(`uploads/products/${imagesName}`)
+                    
+                    req.body.images.push(imagesName)
+            })
+        )
+        next()
+    }
 });
 
 // @desc     Create product
