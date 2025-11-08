@@ -1,8 +1,8 @@
 const multer = require('multer');
 const ApiError = require('../utils/apiError');
 
-exports.uploadSingleImage = (fieldName) => {
-// DiskStorage engin
+const multerOptions = () => {
+    // DiskStorage engin
 // const multerStorage = multer.diskStorage({
 //     destination : (req , file , cb) => {
 //         cb(null , 'uploads/categories');
@@ -26,21 +26,25 @@ exports.uploadSingleImage = (fieldName) => {
     };
 
     const upload = multer({storage : multerStorage , fileFilter : multerFilter});
-    return upload.single(fieldName);
+
+    return upload;
 };
 
+exports.uploadSingleImage = (fieldName) =>  multerOptions().single(fieldName);
+
+
 exports.uploadMixOfImages = (arrayOfFields) => {
-    const multerStorage = multer.memoryStorage();
+    // const multerStorage = multer.memoryStorage();
 
-    const multerFilter = (req , file , cb) => {
-        if(file.mimetype.startsWith('image')){
-            cb(null , true);
-        } else {
-            cb(new ApiError(`Only image allowed` , 400) , false);
-        };
-    };
+    // const multerFilter = (req , file , cb) => {
+    //     if(file.mimetype.startsWith('image')){
+    //         cb(null , true);
+    //     } else {
+    //         cb(new ApiError(`Only image allowed` , 400) , false);
+    //     };
+    // };
 
-    const upload = multer({storage : multerStorage , fileFilter : multerFilter});
+    // const upload = multer({storage : multerStorage , fileFilter : multerFilter});
 
-    return upload.fields(arrayOfFields);
+    return multerOptions().fields(arrayOfFields);
 };
