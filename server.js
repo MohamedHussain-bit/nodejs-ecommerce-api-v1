@@ -10,6 +10,7 @@ const categoryRoutes = require('./routes/categoryRoutes')
 const subCategoryRoutes = require('./routes/subCategoryRoutes');
 const brandRoutes = require('./routes/brandRoutes');
 const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes');
 const ApiError = require('./utils/apiError');
 const globalError = require('./middlewares/errorMiddleware')
 
@@ -32,6 +33,7 @@ app.use('/api/categories' , categoryRoutes);
 app.use('/api/subCategories' , subCategoryRoutes);
 app.use('/api/brands' , brandRoutes);
 app.use('/api/products' , productRoutes);
+app.use('/api/users' , userRoutes);
 
 
 app.use((req , res , next) => {
