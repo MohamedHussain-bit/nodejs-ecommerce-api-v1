@@ -11,13 +11,13 @@ exports.UploadUserImage = uploadSingleImage('profileImage');
 exports.resizeImage = asyncHandler(async (req , res , next) => {
     const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9);
     const filename = `user-${uniqueName}.jpeg`;
-    
-    await sharp(req.file.buffer)
+    if(req.file){
+        await sharp(req.file.buffer)
         .resize(2000 , 1300)
         .toFormat('jpeg')
         .jpeg({quality : 90})
         .toFile(`uploads/users/${filename}`)
-
+    };
     req.body.profileImage = filename;
     next();
 });
