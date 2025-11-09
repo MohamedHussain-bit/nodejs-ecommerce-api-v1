@@ -26,7 +26,7 @@ exports.updateOne = (Model) => asyncHandler( async (req , res , next) => {
 
 exports.createOne = (Model) => asyncHandler( async (req , res) => {
     const document = await Model.create(req.body);
-    return res.status(201).json({document : document});
+    return res.status(201).json({data : document});
 });
 
 exports.getOne = (Model) => asyncHandler( async (req , res , next) => {
