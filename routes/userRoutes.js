@@ -6,17 +6,19 @@ const {
     getUser,
     updateUser,
     deleteUser,
+    UploadUserImage,
+    resizeImage,
 } = require('../controller/userController');
 
 const router = express.Router();
 
 router.route('/')
-    .post(createUser)
+    .post(UploadUserImage , resizeImage , createUser)
     .get(getUsers)
 
 router.route('/:id')
     .get(getUser)
-    .put(updateUser)
+    .put(UploadUserImage , resizeImage , updateUser)
     .delete(deleteUser)
 
 module.exports = router;
