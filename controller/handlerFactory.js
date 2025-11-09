@@ -19,7 +19,7 @@ exports.updateOne = (Model) => asyncHandler( async (req , res , next) => {
         {new : true}
     );
     if(!document){
-        return next(new ApiError(`Document for this id ${id} not found` , 404));
+        return next(new ApiError(`Document for this id ${req.params.id} not found` , 404));
     };
     return res.status(200).json({data : document});
 });
