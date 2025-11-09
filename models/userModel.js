@@ -35,4 +35,18 @@ const UserSchema = new mongoose.Schema({
     }
 } , {timestamps : true});
 
+UserSchema.post('init' , (document) => {
+    if(document.profileImage){
+        const imageURL = `${process.env.BASE_URL}/users/${document.profileImage}`;
+        document.profileImage = imageURL;
+    };
+});
+
+UserSchema.post('save' , (document) => {
+    if(document.profileImage){
+        const imageURL = `${process.env.BASE_URL}/users/${document.profileImage}`;
+        document.profileImage = imageURL;
+    };
+});
+
 module.exports = mongoose.model('User' , UserSchema);
