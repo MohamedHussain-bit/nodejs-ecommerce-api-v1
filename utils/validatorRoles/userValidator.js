@@ -31,11 +31,20 @@ exports.createUserValidator = [
             }
             return true;
         })),
+    check('passwordConfirm')
+        .notEmpty()
+        .withMessage('Password Confirm required'),
     check('password')
         .notEmpty()
         .withMessage('Password required')
         .isLength({min : 6})
-        .withMessage('Too short password'),
+        .withMessage('Password must be at least 6 characters')
+        .custom((password , {req}) => {
+            if(password !== req.body.passwordConfirm){
+                throw new Error('Password confirm incorrect');
+            };
+            return true;
+        }),
     check('phone')
         .optional()
         .isMobilePhone(['ar-EG' , 'ar-SA'])
