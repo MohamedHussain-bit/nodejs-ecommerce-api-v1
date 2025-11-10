@@ -1,4 +1,4 @@
-const {check} = require('express-validator');
+const {check , body} = require('express-validator');
 const slugify = require('slugify');
 const asyncHandler = require('express-async-handler');
 
@@ -50,5 +50,20 @@ exports.getUserValidator = [
     check('id')
         .isMongoId()
         .withMessage('Invalide Id'),
+    validatorMiddleware
+];
+
+exports.updateUserValidator = [
+    check('id')
+        .isMongoId()
+        .withMessage('Invalide Id'),
+    body('name')
+        .optional()
+        .custom((value , {req}) => {
+            if(req.body.name){
+                req.body.name = slugify(value , {lower : true});
+                return true;
+            };
+        }),
     validatorMiddleware
 ];
