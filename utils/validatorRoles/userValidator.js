@@ -67,3 +67,10 @@ exports.updateUserValidator = [
         }),
     validatorMiddleware
 ];
+
+exports.deleteUserValidator = [
+    check('id')
+        .isMongoId()
+        .withMessage('Invalide Id'),
+    validatorMiddleware
+];
