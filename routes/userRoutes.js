@@ -10,15 +10,22 @@ const {
     resizeImage,
 } = require('../controller/userController');
 
+const {
+    createUserValidator,
+    getUserValidator,
+    updateUserValidator,
+    deleteUserValidator,
+} = require('../utils/validatorRoles/userValidator');
+
 const router = express.Router();
 
 router.route('/')
-    .post(UploadUserImage , resizeImage , createUser)
+    .post(UploadUserImage , resizeImage , createUserValidator , createUser)
     .get(getUsers)
 
 router.route('/:id')
-    .get(getUser)
-    .put(UploadUserImage , resizeImage , updateUser)
-    .delete(deleteUser)
+    .get(getUserValidator , getUser)
+    .put(UploadUserImage , resizeImage , updateUserValidator , updateUser)
+    .delete(deleteUserValidator , deleteUser)
 
 module.exports = router;
