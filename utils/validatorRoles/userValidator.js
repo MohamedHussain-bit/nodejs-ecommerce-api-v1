@@ -38,7 +38,8 @@ exports.createUserValidator = [
         .withMessage('Too short password'),
     check('phone')
         .optional()
-        .isMobilePhone(['ar-EG' , 'ar-SA']),
+        .isMobilePhone(['ar-EG' , 'ar-SA'])
+        .withMessage('Invalide phone number only accepted Egypt and SA phone number'),
     check('profileImage')
         .optional(),
     check('role')
