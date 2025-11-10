@@ -43,4 +43,12 @@ exports.createUserValidator = [
         .optional(),
     check('role')
         .optional(),
+    validatorMiddleware
+];
+
+exports.getUserValidator = [
+    check('id')
+        .isMongoId()
+        .withMessage('Invalide Id'),
+    validatorMiddleware
 ];
