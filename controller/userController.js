@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const sharp = require('sharp');
+const bcrypt = require('bcryptjs');
 
 const { uploadSingleImage } = require('../middlewares/uploadImageMiddleware');
 const ApiError = require('../utils/apiError');
@@ -61,6 +62,22 @@ exports.updateUser = asyncHandler( async (req , res , next) => {
         return next(new ApiError(`User for this id ${req.params.body} not found` , 400));
     };
     return res.status(200).json({data : user});
+});
+
+exports.changeUserPassword = asyncHandler( async (req , res , next) => {
+    const userPassword = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+            password : bcrypt.hash(req.body.password)
+        },
+        {
+            new : true
+        }
+    )
+    if(!userPassword){
+        return next(new ApiError(`User password for this id ${req.params.id} not found` , 400));
+    };
+    return res.status(200).json({data : userPassword});
 });
 
 // @desc    Delete user by id
