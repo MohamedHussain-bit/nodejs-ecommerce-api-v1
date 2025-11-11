@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const sharp = require('sharp');
 
 const { uploadSingleImage } = require('../middlewares/uploadImageMiddleware');
+const ApiError = require('../utils/apiError');
 const User = require('../models/userModel');
 const factory = require('./handlerFactory');
 
@@ -40,7 +41,27 @@ exports.getUser = factory.getOne(User);
 // @desc    Update user by id
 // @route   GET /api/users/:id
 // @access  private
-exports.updateUser = factory.updateOne(User);
+exports.updateUser = asyncHandler( async (req , res , next) => {
+    const user = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+            name : req.body.name,
+            slug : req.body.slug,
+            email : req.body.email,
+            phone : req.body.phone,
+            role : req.body.role,
+            active : req.body.active,
+            profileImage : req.body.profileImage,
+        },
+        {
+            new : true
+        }
+    );
+    if(!user){
+        return next(new ApiError(`User for this id ${req.params.body} not found` , 400));
+    };
+    return res.status(200).json({data : user});
+});
 
 // @desc    Delete user by id
 // @route   DELETE /api/users/:id
