@@ -8,6 +8,7 @@ const {
     deleteUser,
     UploadUserImage,
     resizeImage,
+    changeUserPassword,
 } = require('../controller/userController');
 
 const {
@@ -18,6 +19,8 @@ const {
 } = require('../utils/validatorRoles/userValidator');
 
 const router = express.Router();
+
+router.put('/changePassword/:id' , changeUserPassword);
 
 router.route('/')
     .post(UploadUserImage , resizeImage , createUserValidator , createUser)
