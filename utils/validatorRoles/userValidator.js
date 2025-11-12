@@ -1,6 +1,7 @@
 const {check , body} = require('express-validator');
 const slugify = require('slugify');
 const asyncHandler = require('express-async-handler');
+const bcrypt = require('bcryptjs');
 
 const User = require('../../models/userModel');
 const validatorMiddleware = require('../../middlewares/validatorMiddleware');
