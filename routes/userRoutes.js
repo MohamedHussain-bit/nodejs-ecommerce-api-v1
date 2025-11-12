@@ -16,11 +16,12 @@ const {
     getUserValidator,
     updateUserValidator,
     deleteUserValidator,
+    changeUserPasswordValidator,
 } = require('../utils/validatorRoles/userValidator');
 
 const router = express.Router();
 
-router.put('/changePassword/:id' , changeUserPassword);
+router.put('/changePassword/:id' , changeUserPasswordValidator , changeUserPassword);
 
 router.route('/')
     .post(UploadUserImage , resizeImage , createUserValidator , createUser)
