@@ -42,6 +42,7 @@ UserSchema.pre('save' , async function (next) {
     next();
 });
 
+
 UserSchema.post('init' , (document) => {
     if(document.profileImage){
         const imageURL = `${process.env.BASE_URL}/users/${document.profileImage}`;

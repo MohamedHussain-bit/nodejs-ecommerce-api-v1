@@ -89,10 +89,10 @@ exports.changeUserPasswordValidator = [
     body('newPasswordConfirm')
         .notEmpty()
         .withMessage('You must enter new password confirm'),
-    body('newPassword')
+    check('newPassword')
         .notEmpty()
         .withMessage('You must enter new password')
-        .custom(async(value , {req}) => {
+        .custom( asyncHandler( async(value , {req}) => {
             // Verify current password
             const user = await User.findById(req.params.id);
             if(!user){
@@ -111,7 +111,7 @@ exports.changeUserPasswordValidator = [
                 throw new Error('New password confirm not correct');
             };
         return true;
-        }),
+        })),
     validatorMiddleware
 ];
 
