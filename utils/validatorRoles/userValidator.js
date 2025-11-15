@@ -76,6 +76,26 @@ exports.updateUserValidator = [
                 return true;
             };
         }),
+    check('email')
+        .notEmpty()
+        .withMessage('Email required')
+        .isEmail()
+        .withMessage('Invalide email address')
+        .custom(asyncHandler( async (value) => {
+            const user = await User.findOne({email : value});
+            if(user){
+                throw new Error(`Email already in use`);
+            }
+            return true;
+        })),
+    check('phone')
+        .optional()
+        .isMobilePhone(['ar-EG' , 'ar-SA'])
+        .withMessage('Invalide phone number only accepted Egypt and SA phone number'),
+    check('profileImage')
+        .optional(),
+    check('role')
+        .optional(),
     validatorMiddleware
 ];
 
