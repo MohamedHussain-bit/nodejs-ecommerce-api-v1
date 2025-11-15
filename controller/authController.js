@@ -4,7 +4,10 @@ const jwt = require('jsonwebtoken');
 const ApiError = require('../utils/apiError');
 const User = require('../models/userModel');
 
-exports.signUp = asyncHandler( async (req , res , next) => {
+// @desc     Signup
+// @route    POST /api/auth/signup
+// @access   Public
+exports.signup = asyncHandler( async (req , res , next) => {
     // create user
     const user = await User.create({
         name : req.body.name,
