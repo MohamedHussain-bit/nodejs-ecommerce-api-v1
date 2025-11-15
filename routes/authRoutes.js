@@ -10,7 +10,7 @@ const {
 
 const router = express.Router();
 
-router.route('/')
+router.route('/signup')
     .post(signupValidator , signup)
 
 module.exports = router;
