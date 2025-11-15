@@ -13,7 +13,6 @@ exports.signup = asyncHandler( async (req , res , next) => {
         name : req.body.name,
         email : req.body.email,
         password : req.body.password,
-        phone : req.body.phone,
     });
     // Generate token
     const token = jwt.sign(
