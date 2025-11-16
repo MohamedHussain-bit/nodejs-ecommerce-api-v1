@@ -41,3 +41,17 @@ exports.login = asyncHandler(async (req , res , next) => {
     const token = createToken(user._id);
     res.status(200).json({data : user , token});
 });
+
+exports.protected = asyncHandler(async (req , res , next) => {
+    // check if token exist if exist get it
+    let token;
+    if(req.headers.authorization){
+        token = req.headers.authorization.split(' ')[1];
+    };
+    if(!token){
+        return next(new ApiError(
+            `You are not login please login to get access this route`,
+            401
+        ));
+    };
+});
