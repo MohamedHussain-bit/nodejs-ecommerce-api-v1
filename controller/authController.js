@@ -54,4 +54,7 @@ exports.protected = asyncHandler(async (req , res , next) => {
             401
         ));
     };
+    // Verify token no change happend and expired
+    const decoded = jwt.verify(token , process.env.JWT_SECRET_KEY);
+    console.log(decoded);
 });
