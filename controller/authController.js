@@ -57,4 +57,9 @@ exports.protected = asyncHandler(async (req , res , next) => {
     // Verify token no change happend and expired
     const decoded = jwt.verify(token , process.env.JWT_SECRET_KEY);
     console.log(decoded);
+    // check if user exist
+    const currentPassword = await User.findById(decoded.userId);
+    if(!currentPassword){
+        return next(new ApiError('The user thet belong to this token dose nolonger exist' , 401));
+    };
 });
