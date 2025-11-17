@@ -58,8 +58,19 @@ exports.protected = asyncHandler(async (req , res , next) => {
     const decoded = jwt.verify(token , process.env.JWT_SECRET_KEY);
     console.log(decoded);
     // check if user exist
-    const currentPassword = await User.findById(decoded.userId);
-    if(!currentPassword){
+    const currentUser = await User.findById(decoded.userId);
+    if(!currentUser){
         return next(new ApiError('The user thet belong to this token dose nolonger exist' , 401));
     };
+    // check if user change password after token created
+    if(currentUser.passwordChangedAt){
+        const passwordChangedTimeStamp = parseInt(
+            currentUser.passwordChangedAt.getTime() / 1000 , 10
+        );
+        if(passwordChangedTimeStamp > decoded.iat){
+            return next(new ApiError(`User recently changed his password please login agin` , 401));
+        };
+    };
+    req.user = currentUser;
+    next();
 });
