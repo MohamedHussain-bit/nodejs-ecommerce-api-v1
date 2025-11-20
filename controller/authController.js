@@ -84,3 +84,12 @@ exports.allowedTo = (...roles) => {
         next();
     });
 };
+
+// Forget password
+exports.forgetPassword = asyncHandler(async (req , res , next) => {
+    // Get user by email
+    const user = await User.findOne({email : req.body.email});
+    if(!user){
+        return next(new ApiError(`ther is no user with that ${req.body.email}` , 404));
+    };
+});
