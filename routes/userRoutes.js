@@ -19,17 +19,38 @@ const {
     changeUserPasswordValidator,
 } = require('../utils/validatorRoles/userValidator');
 
+const authController = require('../controller/authController');
+
 const router = express.Router();
 
 router.put('/changePassword/:id' , changeUserPasswordValidator , changeUserPassword);
 
 router.route('/')
-    .post(UploadUserImage , resizeImage , createUserValidator , createUser)
+    .post(
+        authController.protected,
+        authController.allowedTo('admin' , 'manager'),
+        UploadUserImage, 
+        resizeImage, 
+        createUserValidator, 
+        createUser
+    )
     .get(getUsers)
 
 router.route('/:id')
     .get(getUserValidator , getUser)
-    .put(UploadUserImage , resizeImage , updateUserValidator , updateUser)
-    .delete(deleteUserValidator , deleteUser)
+    .put(
+        authController.protected,
+        authController.allowedTo('admin' , 'manager'),
+        UploadUserImage, 
+        resizeImage, 
+        updateUserValidator, 
+        updateUser
+    )
+    .delete(
+        authController.protected,
+        authController.allowedTo('admin' , 'manager'),
+        deleteUserValidator, 
+        deleteUser
+    )
 
 module.exports = router;
