@@ -44,7 +44,7 @@ router.route('/:id')
     )
     .delete(
         authController.protected,
-        authController.allowedTo('admin' , 'manager'),
+        authController.allowedTo('admin'),
         deleteBrandValidator, 
         deleteBrand
     )    
