@@ -17,6 +17,7 @@ const {
 
 const {
     protected,
+    allowedTo,
 } = require('../controller/authController');
 
 const subCategoriesRoute = require('./subCategoryRoutes');    
@@ -26,7 +27,7 @@ const router = express.Router();
 router.use('/:categoryId/subCategories' , subCategoriesRoute)
 
 router.route('/')
-    .post(protected , uploadCategoryImage , resizeImage ,createCategoryValidator , createCategory)
+    .post(protected , allowedTo('admin' , 'manager') , uploadCategoryImage , resizeImage ,createCategoryValidator , createCategory)
     .get(getCategories)
 
 router.route('/:id')
