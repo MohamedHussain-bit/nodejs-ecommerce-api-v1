@@ -24,14 +24,33 @@ const router = express.Router();
 router.use('/:categoryId/subCategories' , subCategoriesRoute)
 
 router.route('/')
-    .post(authController.protected ,
-        authController.allowedTo('admin' , 'manager') ,
-        uploadCategoryImage , resizeImage ,createCategoryValidator , createCategory)
+    .post(
+        authController.protected,
+        authController.allowedTo('admin' , 'manager'),
+        uploadCategoryImage, 
+        resizeImage,
+        createCategoryValidator, 
+        createCategory
+    )
     .get(getCategories)
 
 router.route('/:id')
-    .get(getCategoryValidator , getCategory)
-    .put(uploadCategoryImage, resizeImage ,updateCategoryValidator , updateCategory)
-    .delete(deleteCategoryValidator , deleteCategory)
+    .get(
+        getCategoryValidator, 
+        getCategory
+    )
+    .put(
+        authController.protected ,
+        authController.allowedTo('admin' , 'manager'), 
+        uploadCategoryImage, resizeImage,
+        updateCategoryValidator, 
+        updateCategory
+    )
+    .delete(
+        authController.protected ,
+        authController.allowedTo('admin'), 
+        deleteCategoryValidator, 
+        deleteCategory
+    )
 
 module.exports = router;
