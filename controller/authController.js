@@ -57,7 +57,6 @@ exports.protected = asyncHandler(async (req , res , next) => {
     };
     // Verify token no change happend and expired
     const decoded = jwt.verify(token , process.env.JWT_SECRET_KEY);
-    console.log(decoded);
     // check if user exist
     const currentUser = await User.findById(decoded.userId);
     if(!currentUser){
@@ -80,7 +79,7 @@ exports.protected = asyncHandler(async (req , res , next) => {
 exports.allowedTo = (...roles) => {
     return asyncHandler(async (req , res , next) => {
         if(!roles.includes(req.user.role)){
-            return next(new ApiError(`You are not access this route` , 404));
+            return next(new ApiError(`You are not access this route` , 403));
         };
         next();
     });
