@@ -106,5 +106,5 @@ exports.forgotPassword = asyncHandler(async (req , res , next) => {
     user.passwordResetCode = hashedResetCode;
     user.passwordResetExpires = Date.now() + 1000 * 60 * 10;
     user.passwordResetVerified = false;
-    user.save();
+    await user.save();
 });
