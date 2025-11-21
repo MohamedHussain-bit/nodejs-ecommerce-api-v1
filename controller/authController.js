@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -85,11 +87,24 @@ exports.allowedTo = (...roles) => {
     });
 };
 
-// Forget password
-exports.forgetPassword = asyncHandler(async (req , res , next) => {
+// @desc     Forget password
+// @route    POST /api/auth/forgetPassword
+// @access   public
+exports.forgotPassword = asyncHandler(async (req , res , next) => {
     // Get user by email
     const user = await User.findOne({email : req.body.email});
     if(!user){
         return next(new ApiError(`ther is no user with that ${req.body.email}` , 404));
     };
+    // Generate reset random 6 digits and save it in db
+    const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const hashedResetCode = crypto
+        .createHash('sha256')
+        .update(resetCode)
+        .digest('hex');
+    // Save hached reset code on data base
+    user.passwordResetCode = hashedResetCode;
+    user.passwordResetExpires = Date.now() + 1000 * 60 * 10;
+    user.passwordResetVerified = false;
+    user.save();
 });
