@@ -142,4 +142,8 @@ exports.verifyResetCode = asyncHandler(async (req , res , next) => {
     if(!user){
         return next(new ApiError(`Reset code invalide or expired`));
     };
+    // Reset code valide
+    user.passwordResetVerified = true;
+    await user.save();
+    res.status(200).json({status : 'Success'});
 });
