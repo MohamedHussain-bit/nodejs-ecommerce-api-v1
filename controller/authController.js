@@ -128,3 +128,18 @@ exports.forgotPassword = asyncHandler(async (req , res , next) => {
     };
     res.status(200).json({status : 'Success' , message : 'Eeset code send to email'});
 });
+
+exports.verifyResetCode = asyncHandler(async (req , res , next) => {
+    // Get user based on reset code
+    const hashedResetCode = crypto
+        .createHash('sha256')
+        .update(req.body.resetCode)
+        .digest('hex');
+    const user = await User.findOne({
+        passwordResetCode : hashedResetCode,
+        passwordResetExpires : {$gt : Date.now()}
+    });
+    if(!user){
+        return next(new ApiError(`Reset code invalide or expired`));
+    };
+});
