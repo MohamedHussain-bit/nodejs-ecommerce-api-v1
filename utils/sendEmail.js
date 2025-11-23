@@ -12,14 +12,14 @@ const sendEmail = async (options) => {
         }
     });
     // Define email options (like from , to , subject , text)
-    const options = {
+    const mailOptions = {
         from : 'E-shop App <godzela.1242006.gmail.com',
         to : options.email,
         subject : options.subject,
         text : options.message,
     };
     // Send Email
-    await transporter.sendMail(options);
+    await transporter.sendMail(mailOptions);
 };
 
 module.exports = sendEmail;
