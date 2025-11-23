@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 
 const ApiError = require('../utils/apiError');
 const User = require('../models/userModel');
+const sendEmail = require('../utils/sendEmail');
 
 const createToken = (payload) => {
     return jwt.sign(
@@ -107,4 +108,15 @@ exports.forgotPassword = asyncHandler(async (req , res , next) => {
     user.passwordResetExpires = Date.now() + 1000 * 60 * 10;
     user.passwordResetVerified = false;
     await user.save();
+    // Create message to send the email from user
+    const message = `Hi ${user.name},\n we received a request to reset the password
+    on your E-Shop Account.\n Enter this code to complete the reset \n 
+    Thanks E-Shop team`;
+    // Send the email
+    await sendEmail({
+        email : user.email,
+        subject : 'Your password reset code (valide for 10 min)',
+        message,
+    })
+    res.status(200).json({status : 'Success' , message : 'Eeset code send to email'});
 });
