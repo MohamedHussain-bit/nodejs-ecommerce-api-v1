@@ -113,10 +113,18 @@ exports.forgotPassword = asyncHandler(async (req , res , next) => {
     on your E-Shop Account.\n Enter this code to complete the reset \n 
     Thanks E-Shop team`;
     // Send the email
-    await sendEmail({
+    try{
+        await sendEmail({
         email : user.email,
         subject : 'Your password reset code (valide for 10 min)',
         message,
     })
+    }catch(err){
+        user.passwordResetCode = undefined;
+        user.passwordResetExpires = undefined;
+        user.passwordResetVerified = undefined;
+        await user.save();
+        return next(new ApiError(`Thir is an error to sending email`));
+    };
     res.status(200).json({status : 'Success' , message : 'Eeset code send to email'});
 });
