@@ -129,6 +129,9 @@ exports.forgotPassword = asyncHandler(async (req , res , next) => {
     res.status(200).json({status : 'Success' , message : 'Eeset code send to email'});
 });
 
+// @desc     Verify password reset code
+// @route    POST /api/auth/verifyResetCode
+// @access   public
 exports.verifyResetCode = asyncHandler(async (req , res , next) => {
     // Get user based on reset code
     const hashedResetCode = crypto
