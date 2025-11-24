@@ -158,6 +158,10 @@ exports.resetPassword = asyncHandler(async (req , res , next) => {
     // Get user based email
     const user = await User.findOne({email : req.body.email});
     if(!user){
-        return next(new ApiError(`There is no user with email ${req.body.email}` , 400));
+        return next(new ApiError(`There is no user with email ${req.body.email}` , 404));
+    };
+    // Check if reset code verified
+    if(!user.passwordResetVerified){
+        return next(new ApiError(`Reset cose not veified` , 400));
     };
 })
