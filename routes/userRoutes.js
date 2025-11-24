@@ -12,6 +12,7 @@ const {
     getLoggedUserData,
     updateLoggedUserPassword,
     updateLoggedUserData,
+    deleteLoggedUserData
 } = require('../controller/userController');
 
 const {
@@ -65,5 +66,8 @@ router.route('/changeMypassword')
 
 router.route('/updateMe')
     .put(authController.protected , updateLoggedUserValidator , updateLoggedUserData)
+
+router.route('/deleteMe')
+    .delete(deleteLoggedUserData)
 
 module.exports = router;
