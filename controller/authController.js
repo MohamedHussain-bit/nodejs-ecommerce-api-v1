@@ -166,4 +166,11 @@ exports.resetPassword = asyncHandler(async (req , res , next) => {
     };
     // Make user update password
     user.password = req.body.newPassword;
+    user.passwordResetCode = undefined;
+    user.passwordResetExpires = undefined;
+    user.passwordResetVerified = undefined;
+    await user.save();
+    // Generate token
+    const token = createToken(user._id);
+    res.status(200).json({token});
 });
