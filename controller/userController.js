@@ -6,6 +6,7 @@ const { uploadSingleImage } = require('../middlewares/uploadImageMiddleware');
 const ApiError = require('../utils/apiError');
 const User = require('../models/userModel');
 const factory = require('./handlerFactory');
+const createToken = require('../utils/createToken');
 
 
 exports.UploadUserImage = uploadSingleImage('profileImage');
@@ -98,7 +99,7 @@ exports.getLoggedUserData = asyncHandler(async (req , res , next) => {
 // @route   GET /api/users/updateMyPassword
 // @access  private/protected
 exports.updateLoggedUserPassword = asyncHandler(async (req , res , next) => {
-    const userPassword = await User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
         req.user._id,
         {
             password : await bcrypt.hash(req.body.password , 12),
@@ -108,4 +109,7 @@ exports.updateLoggedUserPassword = asyncHandler(async (req , res , next) => {
             new : true
         }
     );
-})
+    // Create token
+    const token = createToken(user._id);
+    res.status(200).json({data : user , token});
+});
