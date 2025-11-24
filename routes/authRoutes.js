@@ -5,6 +5,7 @@ const {
     login,
     forgotPassword,
     verifyResetCode,
+    resetPassword,
 } = require('../controller/authController');
 
 const {
@@ -26,5 +27,8 @@ router.route('/forgotPassword')
 
 router.route('/verifyResetCode')
     .post(verifyResetCode)
+
+router.route('/resetPassword')
+    .put(resetPassword)
 
 module.exports = router;
