@@ -141,3 +141,32 @@ exports.deleteUserValidator = [
         .withMessage('Invalide Id'),
     validatorMiddleware
 ];
+
+exports.updateLoggedUserValidator = [
+    body('name')
+        .optional()
+        .custom((value , {req}) => {
+            if(req.body.name){
+                req.body.name = slugify(value , {lower : true});
+                return true;
+            };
+        }),
+    check('email')
+        .notEmpty()
+        .withMessage('Email required')
+        .isEmail()
+        .withMessage('Invalide email address')
+        .custom(asyncHandler( async (value) => {
+            const user = await User.findOne({email : value});
+            if(user){
+                throw new Error(`Email already in use`);
+            }
+            return true;
+        })),
+    check('phone')
+        .optional()
+        .isMobilePhone(['ar-EG' , 'ar-SA'])
+        .withMessage('Invalide phone number only accepted Egypt and SA phone number'),
+
+    validatorMiddleware
+];
