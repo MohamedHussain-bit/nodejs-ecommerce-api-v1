@@ -99,6 +99,7 @@ exports.getLoggedUserData = asyncHandler(async (req , res , next) => {
 // @route   GET /api/users/updateMyPassword
 // @access  private/protected
 exports.updateLoggedUserPassword = asyncHandler(async (req , res , next) => {
+    // Update user password based payload
     const user = await User.findByIdAndUpdate(
         req.user._id,
         {
