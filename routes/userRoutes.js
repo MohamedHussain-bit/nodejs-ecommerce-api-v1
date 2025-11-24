@@ -10,6 +10,7 @@ const {
     resizeImage,
     changeUserPassword,
     getLoggedUserData,
+    updateLoggedUserPassword,
 } = require('../controller/userController');
 
 const {
@@ -56,5 +57,8 @@ router.route('/:id')
 
 router.route('/getMe')
     .get(authController.protected , getLoggedUserData , getUser)
+
+router.route('/changeMypassword')
+    .put(authController.protected , updateLoggedUserPassword)
 
 module.exports = router;
