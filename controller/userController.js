@@ -96,7 +96,7 @@ exports.getLoggedUserData = asyncHandler(async (req , res , next) => {
 });
 
 // @desc    Update logged user password
-// @route   GET /api/users/updateMyPassword
+// @route   PUT /api/users/updateMyPassword
 // @access  private/protected
 exports.updateLoggedUserPassword = asyncHandler(async (req , res , next) => {
     // Update user password based payload
@@ -116,7 +116,7 @@ exports.updateLoggedUserPassword = asyncHandler(async (req , res , next) => {
 });
 
 // @desc    Update logged user data
-// @route   GET /api/users/updateMyData
+// @route   PUT /api/users/updateMyData
 // @access  private/protected
 exports.updateLoggedUserData = asyncHandler(async (req , res , next) => {
     const updateUser = await User.findByIdAndUpdate(
@@ -131,4 +131,15 @@ exports.updateLoggedUserData = asyncHandler(async (req , res , next) => {
         }
     );
     res.status(200).json({date : updateUser});
+});
+
+// @desc    Deactivate logged user
+// @route   DELETE /api/users/DeleteMe
+// @access  private/protected
+exports.deleteLoggedUserData = asyncHandler(async (req , res , next) => {
+    await User.findByIdAndUpdate(
+        req.user._id,
+        {active : false}
+    );
+    res.status(204).json({status : 'Success'});
 });
