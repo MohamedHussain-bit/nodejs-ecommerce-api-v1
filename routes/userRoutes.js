@@ -9,6 +9,7 @@ const {
     UploadUserImage,
     resizeImage,
     changeUserPassword,
+    getLoggedUserData,
 } = require('../controller/userController');
 
 const {
@@ -52,5 +53,8 @@ router.route('/:id')
         deleteUserValidator, 
         deleteUser
     )
+
+router.route('/getMe')
+    .get(authController.protected , getLoggedUserData , getUser)
 
 module.exports = router;
