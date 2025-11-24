@@ -114,3 +114,21 @@ exports.updateLoggedUserPassword = asyncHandler(async (req , res , next) => {
     const token = createToken(user._id);
     res.status(200).json({data : user , token});
 });
+
+// @desc    Update logged user data
+// @route   GET /api/users/updateMyData
+// @access  private/protected
+exports.updateLoggedUserData = asyncHandler(async (req , res , next) => {
+    const updateUser = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            name : req.body.name,
+            email : req.body.email,
+            phone : req.body.phone,
+        },
+        {
+            new : true
+        }
+    );
+    res.status(200).json({date : updateUser});
+});
