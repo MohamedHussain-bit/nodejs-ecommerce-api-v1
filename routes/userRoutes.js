@@ -11,6 +11,7 @@ const {
     changeUserPassword,
     getLoggedUserData,
     updateLoggedUserPassword,
+    updateLoggedUserData,
 } = require('../controller/userController');
 
 const {
@@ -60,5 +61,8 @@ router.route('/getMe')
 
 router.route('/changeMypassword')
     .put(authController.protected , updateLoggedUserPassword)
+
+router.route('/updateMe')
+    .put(authController.protected , updateLoggedUserData)
 
 module.exports = router;
