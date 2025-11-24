@@ -164,4 +164,6 @@ exports.resetPassword = asyncHandler(async (req , res , next) => {
     if(!user.passwordResetVerified){
         return next(new ApiError(`Reset cose not veified` , 400));
     };
-})
+    // Make user update password
+    user.password = req.body.newPassword;
+});
