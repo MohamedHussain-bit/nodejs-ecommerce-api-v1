@@ -150,3 +150,14 @@ exports.verifyResetCode = asyncHandler(async (req , res , next) => {
     await user.save();
     res.status(200).json({status : 'Success'});
 });
+
+// @desc     Reset password
+// @route    POST /api/auth/resetPassword
+// @access   public
+exports.resetPassword = asyncHandler(async (req , res , next) => {
+    // Get user based email
+    const user = await User.findOne({email : req.body.email});
+    if(!user){
+        return next(new ApiError(`There is no user with email ${req.body.email}` , 400));
+    };
+})
