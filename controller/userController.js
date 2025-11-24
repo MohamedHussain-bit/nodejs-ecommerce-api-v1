@@ -93,3 +93,19 @@ exports.getLoggedUserData = asyncHandler(async (req , res , next) => {
     req.params.id = req.user._id;
     next();
 });
+
+// @desc    Update logged user password
+// @route   GET /api/users/updateMyPassword
+// @access  private/protected
+exports.updateLoggedUserPassword = asyncHandler(async (req , res , next) => {
+    const userPassword = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            password : await bcrypt.hash(req.body.password , 12),
+            passwordChangedAt : Date.now()
+        },
+        {
+            new : true
+        }
+    );
+})
