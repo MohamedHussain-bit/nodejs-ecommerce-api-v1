@@ -20,6 +20,7 @@ const {
     updateUserValidator,
     deleteUserValidator,
     changeUserPasswordValidator,
+    updateLoggedUserValidator,
 } = require('../utils/validatorRoles/userValidator');
 
 const authController = require('../controller/authController');
@@ -63,6 +64,6 @@ router.route('/changeMypassword')
     .put(authController.protected , updateLoggedUserPassword)
 
 router.route('/updateMe')
-    .put(authController.protected , updateLoggedUserData)
+    .put(authController.protected , updateLoggedUserValidator , updateLoggedUserData)
 
 module.exports = router;
