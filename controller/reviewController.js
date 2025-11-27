@@ -20,3 +20,8 @@ exports.getReview = factory.getOne(Review);
 // @route    PUT /api/reviews/:id
 // @access   Private / user
 exports.updateReview = factory.updateOne(Review);
+
+// @desc     Delete Review
+// @route    POST /api/reviews/:id
+// @access   Private / Admin , manager
+exports.deleteReview = factory.deleteOne(Review);
