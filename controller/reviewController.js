@@ -12,6 +12,11 @@ exports.createReview = factory.createOne(Review);
 exports.getReviews = factory.getList(Review);
 
 // @desc     Get specific Review
-// @route    POST /api/reviews
+// @route    GET /api/reviews/:id
 // @access   Private / user
 exports.getReview = factory.getOne(Review);
+
+// @desc     Update Review
+// @route    PUT /api/reviews/:id
+// @access   Private / user
+exports.updateReview = factory.updateOne(Review);
