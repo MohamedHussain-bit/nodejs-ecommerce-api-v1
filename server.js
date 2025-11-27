@@ -12,6 +12,7 @@ const brandRoutes = require('./routes/brandRoutes');
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
 const ApiError = require('./utils/apiError');
 const globalError = require('./middlewares/errorMiddleware')
 
@@ -36,6 +37,7 @@ app.use('/api/brands' , brandRoutes);
 app.use('/api/products' , productRoutes);
 app.use('/api/users' , userRoutes);
 app.use('/api/auth' , authRoutes);
+app.use('/api/reviews' , reviewRoutes);
 
 
 app.use((req , res , next) => {
