@@ -8,6 +8,7 @@ const reviewSchema = new mongoose.Schema({
             type : Number,
             min : [1 , 'Min ratings value is 1.0'],
             max : [5 , 'Min ratings value is 5.0'],
+            required : [true , 'Ratings must be required'],
         },
         user : {
             type : mongoose.Schema.Types.ObjectId,
