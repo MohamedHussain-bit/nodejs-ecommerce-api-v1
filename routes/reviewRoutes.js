@@ -19,6 +19,6 @@ router.route('/')
 router.route('/:id')
     .get(getReview)
     .put(authController.protected , authController.allowedTo('user') ,updateReview)
-    .delete(authController.protected , authController.allowedTo('admin') ,deleteReview)
+    .delete(authController.protected , authController.allowedTo('user' , 'manager' ,'admin') ,deleteReview)
 
 module.exports = router;
