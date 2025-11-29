@@ -8,12 +8,21 @@ const {
     deleteReview,
 } = require('../controller/reviewController');
 
+const {
+    createReviewValidator,
+} = require('../utils/validatorRoles/reviewValidator');
+
 const authController = require('../controller/authController');
 
 const router = express.Router()
 
 router.route('/')
-    .post(authController.protected, authController.allowedTo('user') ,createReview)
+    .post(
+        authController.protected, 
+        authController.allowedTo('user'),
+        createReviewValidator,
+        createReview
+    )
     .get(getReviews)
 
 router.route('/:id')
