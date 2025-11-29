@@ -10,6 +10,7 @@ const {
 
 const {
     createReviewValidator,
+    getReviewValidator,
 } = require('../utils/validatorRoles/reviewValidator');
 
 const authController = require('../controller/authController');
@@ -26,7 +27,7 @@ router.route('/')
     .get(getReviews)
 
 router.route('/:id')
-    .get(getReview)
+    .get(getReviewValidator , getReview)
     .put(authController.protected , authController.allowedTo('user') ,updateReview)
     .delete(authController.protected , authController.allowedTo('user' , 'manager' ,'admin') ,deleteReview)
 
