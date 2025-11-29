@@ -38,5 +38,6 @@ exports.createReviewValidator = [
 exports.getReviewValidator = [
     check('id')
         .isMongoId()
-        .withMessage('Invalide Id format')
+        .withMessage('Invalide Id format'),
+    validatorMiddleware
 ];
