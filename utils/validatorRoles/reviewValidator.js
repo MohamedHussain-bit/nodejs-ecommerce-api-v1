@@ -54,6 +54,7 @@ exports.updateReviewValidator = [
             if(review.user !== req.user._id){
                 return Promise.reject(new Error(`You are not allowed to perform this action`));
             };
+            return true;
         }),
     validatorMiddleware
 ];
