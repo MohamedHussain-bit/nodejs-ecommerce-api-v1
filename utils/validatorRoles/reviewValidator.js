@@ -33,4 +33,10 @@ exports.createReviewValidator = [
             return true;
         }),
     validatorMiddleware
-    ];
+];
+
+exports.getReviewValidator = [
+    check('id')
+        .isMongoId()
+        .withMessage('Invalide Id format')
+];
