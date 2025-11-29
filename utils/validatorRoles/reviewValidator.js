@@ -41,3 +41,18 @@ exports.getReviewValidator = [
         .withMessage('Invalide Id format'),
     validatorMiddleware
 ];
+
+exports.updateReviewValidator = [
+    check('id')
+        .isMongoId()
+        .withMessage('Invalide Id formate')
+        .custom(async (value , {req}) => {
+            const review = await Review.findById(value);
+            if(!review){
+                return Promise.reject(new Error(`Ther is no review with id ${value}`));
+            };
+            if(review.user !== req.user._id){
+                return Promise.reject(new Error(`You are not allowed to perform this action`));
+            };
+        })
+];
