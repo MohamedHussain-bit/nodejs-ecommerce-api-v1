@@ -58,3 +58,28 @@ exports.updateReviewValidator = [
         }),
     validatorMiddleware
 ];
+
+exports.deleteReviewValidator = [
+    check('id')
+        .isMongoId()
+        .withMessage('Invalide Id formate')
+        .custom((value , {req}) => {
+             // Check review ownership before update
+        if (req.user.role === 'user') {
+            return Review.findById(val).then((review) => {
+            if (!review) {
+            return Promise.reject(
+            new Error(`There is no review with id ${val}`)
+            );
+            }
+            if (review.user._id.toString() !== req.user._id.toString()) {
+            return Promise.reject(
+            new Error(`Your are not allowed to perform this action`)
+                );
+            }
+            });
+        }
+        return true;
+    }),
+    validatorMiddleware,
+];

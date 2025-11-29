@@ -12,6 +12,7 @@ const {
     createReviewValidator,
     getReviewValidator,
     updateReviewValidator,
+    deleteReviewValidator,
 } = require('../utils/validatorRoles/reviewValidator');
 
 const authController = require('../controller/authController');
@@ -35,6 +36,6 @@ router.route('/:id')
         updateReviewValidator,
         updateReview
     )
-    .delete(authController.protected , authController.allowedTo('user' , 'manager' ,'admin') ,deleteReview)
+    .delete(authController.protected , authController.allowedTo('user' , 'manager' ,'admin') , deleteReviewValidator,deleteReview)
 
 module.exports = router;
