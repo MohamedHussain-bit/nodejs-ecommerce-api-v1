@@ -51,7 +51,7 @@ exports.updateReviewValidator = [
             if(!review){
                 return Promise.reject(new Error(`Ther is no review with id ${value}`));
             };
-            if(review.user !== req.user._id){
+            if(review.user.toString() !== req.user._id.toString()){
                 return Promise.reject(new Error(`You are not allowed to perform this action`));
             };
             return true;
