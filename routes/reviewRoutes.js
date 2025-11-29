@@ -11,6 +11,7 @@ const {
 const {
     createReviewValidator,
     getReviewValidator,
+    updateReviewValidator,
 } = require('../utils/validatorRoles/reviewValidator');
 
 const authController = require('../controller/authController');
@@ -28,7 +29,12 @@ router.route('/')
 
 router.route('/:id')
     .get(getReviewValidator , getReview)
-    .put(authController.protected , authController.allowedTo('user') ,updateReview)
+    .put(
+        authController.protected, 
+        authController.allowedTo('user'),
+        updateReviewValidator,
+        updateReview
+    )
     .delete(authController.protected , authController.allowedTo('user' , 'manager' ,'admin') ,deleteReview)
 
 module.exports = router;
