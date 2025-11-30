@@ -147,7 +147,7 @@ exports.getProducts = factory.getList(Product , 'Products');
 //     };
 //     return res.status(200).json({data : product});
 // });
-exports.getProduct = factory.getOne(Product);
+exports.getProduct = factory.getOne(Product , 'reviews');
 
 // @desc     Update specific product
 // @route    UPDATE /api/products/:id
