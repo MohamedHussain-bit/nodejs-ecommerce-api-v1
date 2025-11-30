@@ -86,6 +86,12 @@ const setImageURL = (document) => {
     };
 };
 
+productSchema.virtual('reviews' , {
+    ref : 'Review',
+    foreignField : 'product',
+    localField : '_id'
+});
+
 productSchema.post('init' , (document) => {
     setImageURL(document);
 });
