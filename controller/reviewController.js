@@ -7,7 +7,7 @@ const factory = require('./handlerFactory');
 exports.createReview = factory.createOne(Review);
 
 // Nested Route
-// GET /api/categories/:categoryId/subCategry
+// GET /api/products/:productId/reviews
 exports.createFilterObject = asyncHandler( async (req , res , next) => {
     let filterObject = {};
     if(req.params.productId) filterObject = {product : req.params.productId};
