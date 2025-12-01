@@ -6,6 +6,7 @@ const {
     getReview,
     updateReview,
     deleteReview,
+    createFilterObject,
 } = require('../controller/reviewController');
 
 const {
@@ -26,7 +27,7 @@ router.route('/')
         createReviewValidator,
         createReview
     )
-    .get(getReviews)
+    .get(createFilterObject , getReviews)
 
 router.route('/:id')
     .get(getReviewValidator , getReview)
