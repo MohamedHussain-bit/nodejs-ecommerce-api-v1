@@ -7,6 +7,7 @@ const {
     updateReview,
     deleteReview,
     createFilterObject,
+    setProductIdAndUserIdToBody,
 } = require('../controller/reviewController');
 
 const {
@@ -24,6 +25,7 @@ router.route('/')
     .post(
         authController.protected, 
         authController.allowedTo('user'),
+        setProductIdAndUserIdToBody,
         createReviewValidator,
         createReview
     )
