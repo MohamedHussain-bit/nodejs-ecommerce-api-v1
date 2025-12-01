@@ -6,6 +6,14 @@ const factory = require('./handlerFactory');
 // @access   Private / user
 exports.createReview = factory.createOne(Review);
 
+// Nested Route
+// GET /api/categories/:categoryId/subCategry
+exports.createFilterObject = asyncHandler( async (req , res , next) => {
+    let filterObject = {};
+    if(req.params.productId) filterObject = {product : req.params.productId};
+    req.filterObj = filterObject;
+    next();
+});
 // @desc     Get Reviews
 // @route    GET /api/reviews
 // @access   Public
