@@ -18,8 +18,14 @@ const {
 } = require('../utils/validatorRoles/productValidator');
 
 const authController = require('../controller/authController');
+const reviewRoutes = require('./reviewRoutes');
 
 const router = express.Router();
+
+// POST    /products/jfjhfhff4445/reviews
+// GET     /products/jfjhfhff4445/reviews
+// GET     /products/jfjfhjof5412/reviews/jdhdbhlss5441
+router.use('/:productId/reviews' , reviewRoutes);
 
 router.route('/')
     .post(
