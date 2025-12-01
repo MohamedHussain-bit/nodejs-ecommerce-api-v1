@@ -2,7 +2,12 @@ const asyncHandler = require('express-async-handler');
 
 const Review = require('../models/reviewModel');
 const factory = require('./handlerFactory');
-
+// Nested route
+exports.setProductIdAndUserIdToBody = (req , res , next) => {
+    if(!req.body.product) req.body.product = req.params.productId;
+    if(!req.body.user) req.body.user = req.user._id;
+    next();
+};
 // @desc     Create Review
 // @route    POST /api/reviews
 // @access   Private / user
