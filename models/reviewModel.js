@@ -36,16 +36,18 @@ reviewSchema.statics.calcAverageRatingsAndQuantity = async function(productId){
             $match : {product : productId}
         },
         {
-            $group : {_id : 'product'},
-            avgRatings : {$avg : 'ratings'},
-            ratingsQuantity : {$sum : 1}
+            $group : {
+                _id : '$product',
+                avgRatings : {$avg : '$ratings'},
+                ratingsQuantity : {$sum : 1}
         }
+    }
     ])
     console.log(result);
 }
 
 reviewSchema.post('save' , async function() {
-    await this.calcAverageRatingsAndQuantity(this.product);
+    await this.constructor.calcAverageRatingsAndQuantity(this.product);
 });
 
 module.exports = mongoose.model('Review' , reviewSchema);
