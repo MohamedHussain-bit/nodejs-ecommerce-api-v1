@@ -29,4 +29,19 @@ reviewSchema.pre(/^find/ , function(next){
     next();
 });
 
+reviewSchema.statics.calcAverageRatingsAndQuantity = async function(productId){
+    const result = await this.aggregate([
+        // stage 1 : get all reviews in specific product
+        {
+            $match : {product : productId}
+        },
+        {
+            $group : {_id : 'product'},
+            avgRatings : {$avg : 'ratings'},
+            ratingsQuantity : {$sum : 1}
+        }
+    ])
+    console.log(result);
+}
+
 module.exports = mongoose.model('Review' , reviewSchema);
