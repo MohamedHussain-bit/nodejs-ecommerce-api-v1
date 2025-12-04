@@ -35,6 +35,7 @@ reviewSchema.statics.calcAverageRatingsAndQuantity = async function(productId){
         {
             $match : {product : productId}
         },
+        // stage 2 : calculate ratings average quantity
         {
             $group : {
                 _id : '$product',
