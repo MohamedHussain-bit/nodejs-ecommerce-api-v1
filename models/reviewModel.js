@@ -44,4 +44,8 @@ reviewSchema.statics.calcAverageRatingsAndQuantity = async function(productId){
     console.log(result);
 }
 
+reviewSchema.post('save' , async function() {
+    await this.calcAverageRatingsAndQuantity(this.product);
+});
+
 module.exports = mongoose.model('Review' , reviewSchema);
