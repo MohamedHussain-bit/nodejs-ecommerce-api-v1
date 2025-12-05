@@ -22,3 +22,23 @@ exports.addProductToWishlist = asyncHandler(async (req , res , next) => {
         data : user.wishList
     });
 });
+
+// @desc     Remove product from wishlist
+// @route    DELETE /api/wishlist
+// @access   Protected/user
+exports.removeProductFromWishlist  = asyncHandler(async (req , res , next) => {
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $pull : {wishList : req.body.productId}
+        },
+        {
+            new : true
+        }
+    );
+    res.status(200).json({
+        status : 'Success',
+        message : 'Product removed successfully from your wishlist',
+        data : user.wishList
+    });
+});
