@@ -30,7 +30,7 @@ exports.removeProductFromWishlist  = asyncHandler(async (req , res , next) => {
     const user = await User.findByIdAndUpdate(
         req.user._id,
         {
-            $pull : {wishList : req.body.productId}
+            $pull : {wishList : req.params.productId}
         },
         {
             new : true
