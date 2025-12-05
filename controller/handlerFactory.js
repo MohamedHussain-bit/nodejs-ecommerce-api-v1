@@ -9,6 +9,8 @@ exports.deleteOne = (Model) => asyncHandler( async (req , res , next) => {
     if(!document){
         return next(new ApiError(`Document with this id not found` , 404));
     };
+    // Trigger "deleteOne" event when delete document
+    document.deleteOne()
     return res.status(200).json({Message : `Document for this id deleted successfully`});
     });
 
