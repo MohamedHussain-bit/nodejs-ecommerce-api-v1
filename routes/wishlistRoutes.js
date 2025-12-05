@@ -2,6 +2,7 @@ const express = require('express');
 
 const {
     addProductToWishlist,
+    removeProductFromWishlist,
 } = require('../controller/wishListController');
 
 const authController = require('../controller/authController');
@@ -13,6 +14,13 @@ router.route('/')
         authController.protected,
         authController.allowedTo('user'),
         addProductToWishlist
+    )
+
+router.route('/:productId')
+    .delete(
+        authController.protected,
+        authController.allowedTo('user'),
+        removeProductFromWishlist
     )
 
 module.exports = router;
