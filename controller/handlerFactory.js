@@ -21,6 +21,8 @@ exports.updateOne = (Model) => asyncHandler( async (req , res , next) => {
     if(!document){
         return next(new ApiError(`Document for this id ${req.params.id} not found` , 404));
     };
+    // Trigger "save" event when update document
+    document.save();
     return res.status(200).json({data : document});
 });
 
