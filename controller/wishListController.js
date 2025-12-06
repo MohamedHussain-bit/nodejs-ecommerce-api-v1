@@ -50,5 +50,9 @@ exports.getLoggedUserWishlist = asyncHandler(async (req , res , next) => {
     // Get logged user by id and populate wishlist
     const user = await User.findById(req.user._id).populate('wishList');
 
-    res.status(200).json({status : 'Success' , data : user.wishList});
+    res.status(200).json({
+        status : 'Success', 
+        result : user.wishList.length, 
+        data : user.wishList
+    });
 });
