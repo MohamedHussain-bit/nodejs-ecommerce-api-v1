@@ -43,3 +43,16 @@ exports.removeAddress = asyncHandler(async (req , res , next) => {
         data : user.addresses
     });
 });
+
+// @desc     Get user addreses list
+// @route    GET /api/addresses
+// @access   Protected/user
+exports.getLoggedUserAddresses = asyncHandler(async (req , res ,next) => {
+    const user = await User.findById(req.user._id).populate('addresses');
+
+    res.status(200).json({
+        status : 'Success',
+        result : user.addresses.length,
+        data : user.addresses
+    });
+});
