@@ -3,6 +3,7 @@ const express = require('express');
 const {
     addProductToWishlist,
     removeProductFromWishlist,
+    getLoggedUserWishlist,
 } = require('../controller/wishListController');
 
 const authController = require('../controller/authController');
@@ -14,6 +15,11 @@ router.route('/')
         authController.protected,
         authController.allowedTo('user'),
         addProductToWishlist
+    )
+    .get(
+        authController.protected, 
+        authController.allowedTo('user'), 
+        getLoggedUserWishlist
     )
 
 router.route('/:productId')
