@@ -34,10 +34,19 @@ const UserSchema = new mongoose.Schema({
         type : Boolean,
         default : true
     },
+    // Chaild referance
     wishList : [{
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Product'
     }],
+    // Embedded document
+    addresses : [{
+        id : {type : mongoose.Schema.Types.ObjectId},
+        alias : String,
+        phone : String,
+        city : String,
+        postalcode : String,
+    }], 
     passwordChangedAt : Date,
     passwordResetCode : String,
     passwordResetExpires : Date,
