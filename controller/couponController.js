@@ -1,7 +1,6 @@
 const factory = require('./handlerFactory');
 
 const Coupon = require('../models/couponModel');
-const { ExpressValidator } = require('express-validator');
 
 // @desc     Create coupon
 // @route    POST /api/coupon
