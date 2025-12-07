@@ -1,6 +1,7 @@
 const factory = require('./handlerFactory');
 
 const Coupon = require('../models/couponModel');
+const { ExpressValidator } = require('express-validator');
 
 // @desc     Create coupon
 // @route    POST /api/coupon
@@ -21,3 +22,8 @@ exports.getCoupon = factory.getOne(Coupon);
 // @route    PUT /api/coupon/:Id
 // @access   Private/admin , manager
 exports.updateCoupon = factory.updateOne(Coupon);
+
+// @desc     Delete coupon
+// @route    DELETE /api/coupon/Id
+// @access   Private/admin , manager
+exports.deleteCoupon = factory.deleteOne(Coupon);
