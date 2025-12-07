@@ -12,7 +12,12 @@ exports.createCoupon = factory.createOne(Coupon);
 // @access   Private/admin , manager
 exports.getCoupons = factory.getList(Coupon);
 
-// @desc     Get list of coupon
+// @desc     Get specific of coupon
 // @route    GET /api/coupon/:Id
 // @access   Private/admin , manager
 exports.getCoupon = factory.getOne(Coupon);
+
+// @desc     Update coupon
+// @route    PUT /api/coupon/:Id
+// @access   Private/admin , manager
+exports.updateCoupon = factory.updateOne(Coupon);
