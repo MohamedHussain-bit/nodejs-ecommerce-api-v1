@@ -6,16 +6,18 @@ const morgan = require('morgan');
 const  mongoose = require('mongoose');
 
 const connectBD = require('./config/connectDB');
-const categoryRoutes = require('./routes/categoryRoutes')
-const subCategoryRoutes = require('./routes/subCategoryRoutes');
-const brandRoutes = require('./routes/brandRoutes');
-const productRoutes = require('./routes/productRoutes');
-const userRoutes = require('./routes/userRoutes');
-const authRoutes = require('./routes/authRoutes');
-const reviewRoutes = require('./routes/reviewRoutes');
-const wishListRoutes = require('./routes/wishlistRoutes');
-const addressRoutes = require('./routes/addressRoutes');
-const couponRoutes = require('./routes/couponRoutes');
+
+const mountRoutes = require('./routes/index');
+// const categoryRoutes = require('./routes/categoryRoutes')
+// const subCategoryRoutes = require('./routes/subCategoryRoutes');
+// const brandRoutes = require('./routes/brandRoutes');
+// const productRoutes = require('./routes/productRoutes');
+// const userRoutes = require('./routes/userRoutes');
+// const authRoutes = require('./routes/authRoutes');
+// const reviewRoutes = require('./routes/reviewRoutes');
+// const wishListRoutes = require('./routes/wishlistRoutes');
+// const addressRoutes = require('./routes/addressRoutes');
+// const couponRoutes = require('./routes/couponRoutes');
 const ApiError = require('./utils/apiError');
 const globalError = require('./middlewares/errorMiddleware')
 
@@ -34,16 +36,17 @@ if(process.env.NODE_ENV === 'development'){
 };
 
 // Mount routes
-app.use('/api/categories' , categoryRoutes);
-app.use('/api/subCategories' , subCategoryRoutes);
-app.use('/api/brands' , brandRoutes);
-app.use('/api/products' , productRoutes);
-app.use('/api/users' , userRoutes);
-app.use('/api/auth' , authRoutes);
-app.use('/api/reviews' , reviewRoutes);
-app.use('/api/wishlist' , wishListRoutes);
-app.use('/api/address' , addressRoutes);
-app.use('/api/coupon' , couponRoutes);
+mountRoutes(app);
+// app.use('/api/categories' , categoryRoutes);
+// app.use('/api/subCategories' , subCategoryRoutes);
+// app.use('/api/brands' , brandRoutes);
+// app.use('/api/products' , productRoutes);
+// app.use('/api/users' , userRoutes);
+// app.use('/api/auth' , authRoutes);
+// app.use('/api/reviews' , reviewRoutes);
+// app.use('/api/wishlist' , wishListRoutes);
+// app.use('/api/address' , addressRoutes);
+// app.use('/api/coupon' , couponRoutes);
 
 
 app.use((req , res , next) => {
