@@ -11,3 +11,8 @@ exports.createCoupon = factory.createOne(Coupon);
 // @route    GET /api/coupon
 // @access   Private/admin , manager
 exports.getCoupons = factory.getList(Coupon);
+
+// @desc     Get list of coupon
+// @route    GET /api/coupon/:Id
+// @access   Private/admin , manager
+exports.getCoupon = factory.getOne(Coupon);
