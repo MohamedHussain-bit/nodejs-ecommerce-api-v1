@@ -15,6 +15,7 @@ const authRoutes = require('./routes/authRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const wishListRoutes = require('./routes/wishlistRoutes');
 const addressRoutes = require('./routes/addressRoutes');
+const couponRoutes = require('./routes/couponRoutes');
 const ApiError = require('./utils/apiError');
 const globalError = require('./middlewares/errorMiddleware')
 
@@ -42,6 +43,7 @@ app.use('/api/auth' , authRoutes);
 app.use('/api/reviews' , reviewRoutes);
 app.use('/api/wishlist' , wishListRoutes);
 app.use('/api/address' , addressRoutes);
+app.use('/api/coupon' , couponRoutes);
 
 
 app.use((req , res , next) => {
