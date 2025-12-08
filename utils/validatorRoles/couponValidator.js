@@ -16,5 +16,14 @@ exports.createCouponValidator = [
             };
             return true;
         }),
+    check('expire')
+        .notEmpty()
+        .withMessage('Coupon expire required')
+        .toDate(),
+    check('discount')
+        .notEmpty()
+        .withMessage('Coupon discount required')
+        .isNumeric()
+        .withMessage('Coupon must be number'),
     validatorMiddleware
 ];
