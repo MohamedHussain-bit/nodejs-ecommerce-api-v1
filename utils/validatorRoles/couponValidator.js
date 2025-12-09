@@ -27,3 +27,33 @@ exports.createCouponValidator = [
         .withMessage('Coupon must be number'),
     validatorMiddleware
 ];
+
+exports.getSpecificCouponValidator = [
+    check('id')
+        .isMongoId()
+        .withMessage('Invalide Id'),
+    validatorMiddleware
+];
+
+exports.updateCouponValidator = [
+    check('id')
+        .isMongoId()
+        .withMessage('Invalide Id'),
+    check('name')
+        .optional()
+        .custom(async (value , {req}) => {
+            const coupon = await Coupon.findOne({name : value});
+            if(coupon){
+                throw new Error('Coupon alredy exist');
+            };
+            return true;
+        }),
+    validatorMiddleware
+];
+
+exports.deleteCouponValidator = [
+    check('id')
+        .isMongoId()
+        .withMessage('Invalide Id'),
+    validatorMiddleware
+];

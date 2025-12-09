@@ -8,6 +8,13 @@ const {
     deleteCoupon,
 } = require('../controller/couponController');
 
+const {
+    createCouponValidator,
+    getSpecificCouponValidator,
+    updateCouponValidator,
+    deleteCouponValidator,
+} = require('../utils/validatorRoles/couponValidator');
+
 const authController = require('../controller/authController');
 
 const router = express.Router();
@@ -15,6 +22,7 @@ const router = express.Router();
 router.route('/')
     .post(authController.protected, 
         authController.allowedTo('admin' , 'manager'), 
+        createCouponValidator,
         createCoupon
     )
     .get(
@@ -27,16 +35,19 @@ router.route('/:id')
     .get(
         authController.protected,
         authController.allowedTo('admin' , 'manager'),
+        getSpecificCouponValidator,
         getCoupon
     )
     .put(
         authController.protected,
         authController.allowedTo('admin' , 'manager'),
+        updateCouponValidator,
         updateCoupon
     )
     .delete(
         authController.protected,
         authController.allowedTo('admin' , 'manager'),
+        deleteCouponValidator,
         deleteCoupon
     )
 
