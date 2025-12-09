@@ -9,6 +9,7 @@ exports.createCouponValidator = [
         .notEmpty()
         .withMessage('Coupon name required')
         .trim()
+        .toUpperCase()
         .custom(async (value , {req}) => {
             const coupon = await Coupon.findOne({name : value});
             if(coupon){
