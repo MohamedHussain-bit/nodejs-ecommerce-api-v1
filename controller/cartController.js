@@ -19,6 +19,8 @@ exports.addProductToCart = asyncHandler(async (req , res , next) => {
                 color : req.body.color,
                 price : product.price,
             }]
-        })
-    }
-})
+        });
+    } else {
+        console.log('This is cart');
+    };
+});
