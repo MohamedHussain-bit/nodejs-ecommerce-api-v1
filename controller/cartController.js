@@ -22,6 +22,24 @@ exports.addProductToCart = asyncHandler(async (req , res , next) => {
             }]
         });
     } else {
-        console.log('This is cart');
+        // Product exist in cart , update product qountity
+        const productIndex = cart.cartItems.findIndex(
+            (item) => item.product.toString() === req.body.product 
+            &&
+            item.color === req.body.color
+            )
+            if(productIndex > -1){
+                const cartItem = cart.cartItems[productIndex];
+                cartItem.quantity += 1;
+                cart.cartItems[productIndex] = cartItem;
+            } else {
+                // Product not exist in cart , push product to cart
+                cart.cartItems.push({
+                    product : req.body.product,
+                    color : req.body.color,
+                    price : product.price,
+                });
+            };
     };
+    await cart.save();
 });
