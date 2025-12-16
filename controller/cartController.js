@@ -41,5 +41,16 @@ exports.addProductToCart = asyncHandler(async (req , res , next) => {
                 });
             };
     };
+    // Calculate total cart price
+    let totalPrice = 0;
+    cart.cartItems.forEach((item) => {
+        totalPrice = totalPrice + item.quantity * item.price;
+    })
+    cart.totalCartPrice = totalPrice;
     await cart.save();
+    res.status(200).json({
+        status : 'Success',
+        message : 'Product added to cart successfully',
+        data : cart
+    });
 });
