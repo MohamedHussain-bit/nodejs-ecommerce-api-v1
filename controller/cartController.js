@@ -75,7 +75,7 @@ exports.getLoggedUserCart = asyncHandler(async (req , res , next) => {
 // @access   Protected/user
 exports.removeSpecificCartItem = asyncHandler(async (req , res , next) => {
     const cart = await Cart.findOneAndUpdate(
-        req.user._id,
+        {user : req.user._id},
         {
             $pull : {cartItems : { _id : req.params.itemId }}
         },
@@ -88,9 +88,9 @@ exports.removeSpecificCartItem = asyncHandler(async (req , res , next) => {
         totalPrice = totalPrice + item.price * item.quantity;
     });
     cart.totalCartPrice = totalPrice;
-    cart.save();
+    await cart.save();
     res.status(200).json({
-        status : 'Success',
+        status : 'success',
         numOfCartItems : cart.cartItems.length,
         data : cart
     });

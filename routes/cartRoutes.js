@@ -23,7 +23,7 @@ router.route('/')
     )
 
 router.route('/:itemId')
-    .delete(
+    .put(
         authController.protected,
         authController.allowedTo('user'),
         removeSpecificCartItem
