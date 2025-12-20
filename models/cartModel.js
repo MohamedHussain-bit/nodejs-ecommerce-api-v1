@@ -19,6 +19,16 @@ const cartSchema = new mongoose.Schema({
         type : mongoose.Schema.ObjectId,
         ref : 'User'
     }
-} , {timestamps : true});
+} , 
+{
+    timestamps : true,
+    toJSON : {virtuals : true},
+    toObject : {virtuals : true}
+});
+
+cartSchema.pre(/^find/ , function(next){
+    this.populate({path : 'cartItems.product' , select : 'title -_id'});
+    next()
+});
 
 module.exports = mongoose.model('Cart' , cartSchema);
