@@ -95,3 +95,16 @@ exports.removeSpecificCartItem = asyncHandler(async (req , res , next) => {
         data : cart
     });
 });
+
+// @desc     Clear logged user cart
+// @route    DELETE /api/cart
+// @access   Protected/user
+exports.clearLoggedUserCart = asyncHandler(async (req , res , next) => {
+    const cart = await Cart.findOneAndDelete({
+        user : req.user._id
+    });
+    if(!cart){
+        return next(new ApiError(`Not found cart for this user` , 404));
+    };
+    res.status(204).json({message : `deleted successfully`});
+});
