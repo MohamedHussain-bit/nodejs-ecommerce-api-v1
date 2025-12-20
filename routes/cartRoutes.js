@@ -2,6 +2,7 @@ const express = require('express');
 
 const {
     addProductToCart,
+    getLoggedUserCart
 } = require('../controller/cartController');
 
 const authController = require('../controller/authController');
@@ -13,6 +14,11 @@ router.route('/')
         authController.protected, 
         authController.allowedTo('user'),
         addProductToCart
+    )
+    .get(
+        authController.protected,
+        authController.allowedTo("user"),
+        getLoggedUserCart
     )
 
 
