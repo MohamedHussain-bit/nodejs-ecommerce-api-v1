@@ -69,3 +69,29 @@ exports.getLoggedUserCart = asyncHandler(async (req , res , next) => {
         data : cart,
     });
 });
+
+// @desc     Remove specific cart item
+// @route    DELETE /api/cart/:itemId
+// @access   Protected/user
+exports.removeSpecificCartItem = asyncHandler(async (req , res , next) => {
+    const cart = await Cart.findByIdAndUpdate(
+        req.user._id,
+        {
+            $pull : {cartItems : { _id : req.params.itemId }}
+        },
+        {
+            new : true
+        }
+    );
+    let totalPrice = 0;
+    cart.cartItems.forEach((item) => {
+        totalPrice = totalPrice + item.price * item.quantity;
+    });
+    cart.totalCartPrice = totalPrice;
+    cart.save();
+    res.status(200).json({
+        status : 'Success',
+        numOfCartItems : cart.cartItems.length,
+        data : cart
+    });
+});
