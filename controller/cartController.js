@@ -74,7 +74,7 @@ exports.getLoggedUserCart = asyncHandler(async (req , res , next) => {
 // @route    DELETE /api/cart/:itemId
 // @access   Protected/user
 exports.removeSpecificCartItem = asyncHandler(async (req , res , next) => {
-    const cart = await Cart.findByIdAndUpdate(
+    const cart = await Cart.findOneAndUpdate(
         req.user._id,
         {
             $pull : {cartItems : { _id : req.params.itemId }}

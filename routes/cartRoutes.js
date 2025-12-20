@@ -2,7 +2,8 @@ const express = require('express');
 
 const {
     addProductToCart,
-    getLoggedUserCart
+    getLoggedUserCart,
+    removeSpecificCartItem
 } = require('../controller/cartController');
 
 const authController = require('../controller/authController');
@@ -21,5 +22,11 @@ router.route('/')
         getLoggedUserCart
     )
 
+router.route('/:itemId')
+    .delete(
+        authController.protected,
+        authController.allowedTo('user'),
+        removeSpecificCartItem
+    )
 
 module.exports = router;
