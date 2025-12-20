@@ -3,7 +3,8 @@ const express = require('express');
 const {
     addProductToCart,
     getLoggedUserCart,
-    removeSpecificCartItem
+    removeSpecificCartItem,
+    clearLoggedUserCart,
 } = require('../controller/cartController');
 
 const authController = require('../controller/authController');
@@ -20,6 +21,11 @@ router.route('/')
         authController.protected,
         authController.allowedTo("user"),
         getLoggedUserCart
+    )
+    .delete(
+        authController.protected,
+        authController.allowedTo('user'),
+        clearLoggedUserCart
     )
 
 router.route('/:itemId')
