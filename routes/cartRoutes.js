@@ -5,6 +5,7 @@ const {
     getLoggedUserCart,
     removeSpecificCartItem,
     clearLoggedUserCart,
+    updateCartItemsQuantity,
 } = require('../controller/cartController');
 
 const authController = require('../controller/authController');
@@ -33,6 +34,11 @@ router.route('/:itemId')
         authController.protected,
         authController.allowedTo('user'),
         removeSpecificCartItem
+    )
+    .put(
+        authController.protected,
+        authController.allowedTo('user'),
+        updateCartItemsQuantity
     )
 
 module.exports = router;
