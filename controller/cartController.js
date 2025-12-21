@@ -108,3 +108,33 @@ exports.clearLoggedUserCart = asyncHandler(async (req , res , next) => {
     };
     res.status(204).json({message : `deleted successfully`});
 });
+
+// @desc     Update cart items quantity
+// @route    PUT /api/cart/:id
+// @access   Protected/user
+exports.updateCartItemsQuantity = asyncHandler(async (req , res , next) => {
+    const cart = await Cart.findOneAndUpdate({ user : req.user._id });
+    if(!cart){
+        return next(new ApiError(`Not found cart for this user` , 404));
+    };
+    const itemIndex = cart.cartItems.findIndex((item) => {
+        item._id.toString() === req.params.itemId;
+    });
+    if(itemIndex > -1){
+        const cartItem = cart.cartItems[itemIndex];
+        cartItem.quantity = req.body.quantity;
+        cart.cartItems[itemIndex] = cartItem;
+    } else {
+        return next(new ApiError(`Ther is no item for this id` , 404));
+    };
+    let totalPrice = 0;
+    cart.cartItems.forEach((item) => {
+        totalPrice = totalPrice + item.price * item.quantity;
+    });
+    await cart.save();
+    res.status(200).json({
+        status : 'success',
+        numOfCartItems : cart.cartItems.length,
+        data : cart
+    });
+});
