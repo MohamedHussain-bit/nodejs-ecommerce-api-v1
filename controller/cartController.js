@@ -113,12 +113,12 @@ exports.clearLoggedUserCart = asyncHandler(async (req , res , next) => {
 // @route    PUT /api/cart/:id
 // @access   Protected/user
 exports.updateCartItemsQuantity = asyncHandler(async (req , res , next) => {
-    const cart = await Cart.findOneAndUpdate({ user : req.user._id });
+    const cart = await Cart.findOne({ user : req.user._id });
     if(!cart){
         return next(new ApiError(`Not found cart for this user` , 404));
     };
     const itemIndex = cart.cartItems.findIndex((item) => {
-        item._id.toString() === req.params.itemId;
+        return item._id.toString() === req.params.itemId;
     });
     if(itemIndex > -1){
         const cartItem = cart.cartItems[itemIndex];
@@ -131,6 +131,7 @@ exports.updateCartItemsQuantity = asyncHandler(async (req , res , next) => {
     cart.cartItems.forEach((item) => {
         totalPrice = totalPrice + item.price * item.quantity;
     });
+    cart.totalCartPrice = totalPrice;
     await cart.save();
     res.status(200).json({
         status : 'success',
