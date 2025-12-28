@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 
 const Cart = require('../models/cartModel');
 const Product = require('../models/productModel');
+const Coupon = require('../models/couponModel');
 const ApiError = require('../utils/apiError');
 
 // @desc     Add product to cart
@@ -138,4 +139,18 @@ exports.updateCartItemsQuantity = asyncHandler(async (req , res , next) => {
         numOfCartItems : cart.cartItems.length,
         data : cart
     });
+});
+
+// @desc     Apply coupon based on loged user cart
+// @route    POST /api/cart/applyCoupon
+// @access   Protected/user
+exports.applyCoupon = asyncHandler(async (req , res , next) => {
+    // Get coupon pased on coupon name
+    const coupon = await Coupon.findOne({
+        name : req.body.coupon,
+        expire : {$gt : Date.now()}
+    });
+    if(!coupon){
+        return next(new ApiError(`Coupon is invalide or expired`));
+    };
 });
