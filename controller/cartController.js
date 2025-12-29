@@ -151,13 +151,13 @@ exports.applyCoupon = asyncHandler(async (req , res , next) => {
         expire : {$gt : Date.now()}
     });
     if(!coupon){
-        return next(new ApiError(`Coupon is invalide or expired`));
+        return next(new ApiError(`Coupon is invalide or expired` , 404));
     };
     // Get logged user cart to get total cart price
     const cart = await Cart.findOne({user : req.user._id});
     const totalPrice = cart.totalCartPrice;
     // Calculate price after discount
-    const totalPriceAfterDiscount = (
+    const totalPriceAfterDiscount = Number(
         totalPrice - (totalPrice * coupon.discount) / 100
     ).toFixed(2);
     cart.totalCartPriceAfterDiscount = totalPriceAfterDiscount;

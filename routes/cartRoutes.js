@@ -30,6 +30,13 @@ router.route('/')
         clearLoggedUserCart
     )
 
+router.route('/applyCoupon')
+    .put(
+        authController.protected,
+        authController.allowedTo('user'),
+        applyCoupon
+    )
+
 router.route('/:itemId')
     .delete(
         authController.protected,
@@ -41,8 +48,5 @@ router.route('/:itemId')
         authController.allowedTo('user'),
         updateCartItemsQuantity
     )
-
-router.route('/applyCoupon')
-    .put(applyCoupon)
 
 module.exports = router;
