@@ -48,6 +48,7 @@ exports.addProductToCart = asyncHandler(async (req , res , next) => {
         totalPrice = totalPrice + item.quantity * item.price;
     })
     cart.totalCartPrice = totalPrice;
+    cart.totalCartPriceAfterDiscount = undefined;
     await cart.save();
     res.status(200).json({
         status : 'Success',
@@ -64,6 +65,7 @@ exports.getLoggedUserCart = asyncHandler(async (req , res , next) => {
     if(!cart){
         return next(new ApiError(`There is no cart for this user id ${req.user._id}` , 404));
     };
+    cart.totalCartPriceAfterDiscount = undefined;
     res.status(200).json({
         status : 'Success',
         numOfCartItems : cart.cartItems.length,
@@ -89,6 +91,7 @@ exports.removeSpecificCartItem = asyncHandler(async (req , res , next) => {
         totalPrice = totalPrice + item.price * item.quantity;
     });
     cart.totalCartPrice = totalPrice;
+    cart.totalCartPriceAfterDiscount = undefined;
     await cart.save();
     res.status(200).json({
         status : 'success',
@@ -107,6 +110,7 @@ exports.clearLoggedUserCart = asyncHandler(async (req , res , next) => {
     if(!cart){
         return next(new ApiError(`Not found cart for this user` , 404));
     };
+    cart.totalCartPriceAfterDiscount = undefined;
     res.status(204).json({message : `deleted successfully`});
 });
 
@@ -133,6 +137,7 @@ exports.updateCartItemsQuantity = asyncHandler(async (req , res , next) => {
         totalPrice = totalPrice + item.price * item.quantity;
     });
     cart.totalCartPrice = totalPrice;
+    cart.totalCartPriceAfterDiscount = undefined;
     await cart.save();
     res.status(200).json({
         status : 'success',
