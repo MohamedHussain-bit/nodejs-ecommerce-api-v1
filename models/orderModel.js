@@ -19,6 +19,12 @@ const orderSchema = new mongoose.Schema({
         type : Number,
         default : 0
     },
+    shippingAddress : {
+        detils : String,
+        phone : String,
+        city : String,
+        postalCode : String
+    },
     shippingPrice : {
         type : Number,
         default : 0
