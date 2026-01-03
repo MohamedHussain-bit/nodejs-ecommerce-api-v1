@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 
 const Order = require('../models/orderModel');
 const Cart = require('../models/cartModel');
+const Product = require('../models/productModel');
 const ApiError = require('../utils/apiError');
 const factory = require('./handlerFactory');
 
@@ -26,5 +27,21 @@ exports.createCashOrder = asyncHandler(async (req , res , next) => {
         cartItems : cart.cartItems,
         shippingAddress : req.body.shippingAddress,
         totalOrderPrice,
+    });
+    // After creating order decrement product quantity increment product sold
+    if(order){
+        const bulkOptions = cart.cartItems.map((item) => ({
+        updateOne : {
+            filter : { _id : item.product },
+            update : { $inc : {qunatity : -item.quantity , sold : +item.sold}}
+        }
+        }));
+        await Product.bulkWrite(bulkOptions , {});
+        // Clear cart depend on cartId
+        await Cart.findOneAndDelete(req.params.cartId);
+    };
+    res.status(201).json({
+        status : 'Success',
+        data : order
     });
 });
