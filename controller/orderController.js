@@ -33,12 +33,12 @@ exports.createCashOrder = asyncHandler(async (req , res , next) => {
         const bulkOptions = cart.cartItems.map((item) => ({
         updateOne : {
             filter : { _id : item.product },
-            update : { $inc : {qunatity : -item.quantity , sold : +item.sold}}
+            update : { $inc : {quantity : -item.quantity , sold : item.quantity}}
         }
         }));
         await Product.bulkWrite(bulkOptions , {});
         // Clear cart depend on cartId
-        await Cart.findOneAndDelete(req.params.cartId);
+        await Cart.findByIdAndDelete(req.params.cartId);
     };
     res.status(201).json({
         status : 'Success',
