@@ -23,7 +23,7 @@ const mountRoutes = (app) => {
     app.use('/api/address' , addressRoutes);
     app.use('/api/coupon' , couponRoutes);
     app.use('/api/cart' , cartRoutes);
-    app.use('/api/order' , orderRoutes);
+    app.use('/api/orders' , orderRoutes);
 };
 
 module.exports = mountRoutes;
