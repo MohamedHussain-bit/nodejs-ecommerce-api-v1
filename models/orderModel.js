@@ -49,4 +49,10 @@ const orderSchema = new mongoose.Schema({
     deliverdAt : Date
 } , {timestamps : true});
 
+orderSchema.pre(/^find/ , function(next) {
+    this.populate({path : 'user' , select : 'name phone email'})
+        .populate({path : 'cartItems.product' , select : 'title imageCover'});
+    next();
+});
+
 module.exports = mongoose.model('Order' , orderSchema);
