@@ -5,6 +5,8 @@ const {
     getAllOrders,
     getSpecificOrder,
     filterOrderForLoggedUser,
+    updateOrderToPaid,
+    updateOrderToDilevered,
 } = require('../controller/orderController');
 const autController = require('../controller/authController');
 
@@ -28,6 +30,20 @@ router.route('/')
 router.route('/:id')
     .get(
         getSpecificOrder
+    )
+
+router.route('/:id/pay')
+    .get(
+        autController.protected, 
+        autController.allowedTo('admin' , 'manager'),
+        updateOrderToPaid
+    )
+
+router.route('/:id/deliver')
+    .get(
+        autController.protected, 
+        autController.allowedTo('admin' , 'manager'),
+        updateOrderToDilevered
     )
 
 module.exports = router;
