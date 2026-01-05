@@ -33,14 +33,14 @@ router.route('/:id')
     )
 
 router.route('/:id/pay')
-    .get(
+    .put(
         autController.protected, 
         autController.allowedTo('admin' , 'manager'),
         updateOrderToPaid
     )
 
 router.route('/:id/deliver')
-    .get(
+    .put(
         autController.protected, 
         autController.allowedTo('admin' , 'manager'),
         updateOrderToDilevered
