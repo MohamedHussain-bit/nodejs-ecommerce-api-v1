@@ -45,3 +45,18 @@ exports.createCashOrder = asyncHandler(async (req , res , next) => {
         data : order
     });
 });
+
+exports.filterOrderForLoggedUser = asyncHandler(async(req , res , next) => {
+    if(req.user.role === 'user') req.filterObj = {user : req.user._id};
+    next();
+});
+
+// @desc     Get all orders
+// @route    POST /api/orders
+// @access   Protected/User-admin-manger
+exports.getAllOrders = factory.getList(Order);
+
+// @desc     Get specific orders
+// @route    POST /api/orders
+// @access   Protected/User-admin-manger
+exports.getSpecificOrder = factory.getOne(Order);
