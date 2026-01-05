@@ -60,3 +60,19 @@ exports.getAllOrders = factory.getList(Order);
 // @route    POST /api/orders
 // @access   Protected/User-admin-manger
 exports.getSpecificOrder = factory.getOne(Order);
+
+// @desc     Update order paid status
+// @route    PUT /api/orders/:id/pay
+// @access   Protected/admin-manger
+exports.updateOrderToPaid = asyncHandler(async (req , res , next) => {
+    // Get order based on id
+    const order = await Order.findById(req.params.id);
+    if(!order){
+        return next(new ApiError(`not found order for this id ${req.params.id}` , 404));
+    };
+    // Update order to paid
+    order.isPaid = true;
+    order.paidAt = true
+    const updatedOrder = await order.save();
+    res.status(200).json({status : 'Success' , data : updatedOrder});
+});
