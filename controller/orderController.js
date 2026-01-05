@@ -72,7 +72,23 @@ exports.updateOrderToPaid = asyncHandler(async (req , res , next) => {
     };
     // Update order to paid
     order.isPaid = true;
-    order.paidAt = true
+    order.paidAt = Date.now();
+    const updatedOrder = await order.save();
+    res.status(200).json({status : 'Success' , data : updatedOrder});
+});
+
+// @desc     Update order delivered status
+// @route    PUT /api/orders/:id/deliver
+// @access   Protected/admin-manger
+exports.updateOrderToPaid = asyncHandler(async (req , res , next) => {
+    // Get order based on id
+    const order = await Order.findById(req.params.id);
+    if(!order){
+        return next(new ApiError(`not found order for this id ${req.params.id}` , 404));
+    };
+    // Update order to paid
+    order.isDelivered = true;
+    order.deliverdAt = Date.now();
     const updatedOrder = await order.save();
     res.status(200).json({status : 'Success' , data : updatedOrder});
 });
