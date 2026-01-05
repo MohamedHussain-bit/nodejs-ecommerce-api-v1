@@ -18,7 +18,7 @@ router.route('/:cartId')
     )
 
 router.route('/')
-    .post(
+    .get(
         autController.protected, 
         autController.allowedTo('user' , 'admin' , 'manager'),
         filterOrderForLoggedUser,
@@ -26,9 +26,7 @@ router.route('/')
     )
 
 router.route('/:id')
-    .post(
-        autController.protected , 
-        autController.allowedTo('user'), 
+    .get(
         getSpecificOrder
     )
 
