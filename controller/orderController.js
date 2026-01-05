@@ -80,7 +80,7 @@ exports.updateOrderToPaid = asyncHandler(async (req , res , next) => {
 // @desc     Update order delivered status
 // @route    PUT /api/orders/:id/deliver
 // @access   Protected/admin-manger
-exports.updateOrderToPaid = asyncHandler(async (req , res , next) => {
+exports.updateOrderToDilevered = asyncHandler(async (req , res , next) => {
     // Get order based on id
     const order = await Order.findById(req.params.id);
     if(!order){
