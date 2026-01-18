@@ -14,7 +14,7 @@ const autController = require('../controller/authController');
 const router = express.Router();
 
 router.route('checkout-session/:cartId')
-    .get(autController.allowedTo('user') , )
+    .get(autController.allowedTo('user') , checkoutSession)
 
 router.route('/:cartId')
     .post(
