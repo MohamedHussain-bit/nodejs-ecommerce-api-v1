@@ -7,15 +7,19 @@ const {
     filterOrderForLoggedUser,
     updateOrderToPaid,
     updateOrderToDilevered,
+    checkoutSession,
 } = require('../controller/orderController');
 const autController = require('../controller/authController');
 
 const router = express.Router();
 
+router.route('checkout-session/:cartId')
+    .get(autController.allowedTo('user') , )
+
 router.route('/:cartId')
     .post(
         autController.protected, 
-        autController.allowedTo('user'), 
+        autController.allowedTo('user' , checkoutSession), 
         createCashOrder
     )
 
