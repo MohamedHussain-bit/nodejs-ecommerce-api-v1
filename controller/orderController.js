@@ -97,34 +97,57 @@ exports.updateOrderToDilevered = asyncHandler(async (req , res , next) => {
 // @desc     Get checkout session from stripe and send it as response
 // @route    GET/api/orders/checkout-session/:cartId
 // @access   Protected/admin-manger
-exports.checkoutSession = asyncHandler(async (req , res , next) => {
+exports.checkoutSession = asyncHandler(async (req, res, next) => {
     const taxPrice = 0;
     const shippingPrice = 0;
-    // 1- Get cart depend on cartId
+
+    // 1- Get cart
     const cart = await Cart.findById(req.params.cartId);
-    if(!cart){
-        return next(new ApiError(`not found cart for this id ${req.params.cartId}` , 404));
-    };
-    // 1- Cet order price depend on cart price and check if apply coupon
-    const cartPrice = cart.totalCartPriceAfterDiscount ? 
-        cart.totalCartPriceAfterDiscount : cart.totalCartPrice;
+    if (!cart) {
+        return next(
+            new ApiError(`not found cart for this id ${req.params.cartId}`, 404)
+    );
+    }
+
+    // 2- Calculate price
+    const cartPrice = cart.totalCartPriceAfterDiscount
+        ? cart.totalCartPriceAfterDiscount
+        : cart.totalCartPrice;
+
     const totalOrderPrice = cartPrice + taxPrice + shippingPrice;
 
-    // 3- Create stripe checkout session
-    const session = await stripe.checkout.sessions.careate({
-        line_items : [{
-            name : req.user.name,
-            amount : totalOrderPrice * 100,
-            currancy : 'egp',
-            quantity : 1,
-        }],
-        mode : 'payment',
-        success_url : `${req.protocol}://${req.get('host')}/orders`,
-        cancel_url : `${req.protocol}://${req.get('host')}/cart`,
-        customer_email : req.user.email,
-        client_reference_id : cart._id,
-        metadata : req.body.shippingAddress
+    // 3- Create Stripe session
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        mode: 'payment',
+
+        line_items: [
+        {
+            price_data: {
+                currency: 'egp',
+                product_data: {
+                name: 'Order payment',
+                },
+            unit_amount: totalOrderPrice * 100,
+            },
+            quantity: 1,
+        },
+    ],
+
+        customer_email: req.user.email,
+        client_reference_id: cart._id.toString(),
+
+        success_url: `${req.protocol}://${req.get('host')}/orders`,
+        cancel_url: `${req.protocol}://${req.get('host')}/cart`,
+
+        metadata: {
+        userId: req.user._id.toString(),
+        },
     });
-    // 4- send session to responce
-    res.status(200).json({status : 'success' , session});
+
+    // 4- Response
+    res.status(200).json({
+    status: 'success',
+    session,
+    });
 });

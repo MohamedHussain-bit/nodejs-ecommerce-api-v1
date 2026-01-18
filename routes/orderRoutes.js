@@ -13,13 +13,13 @@ const autController = require('../controller/authController');
 
 const router = express.Router();
 
-router.route('checkout-session/:cartId')
-    .get(autController.allowedTo('user') , checkoutSession)
+router.route('/checkout-session/:cartId')
+    .get(autController.protected ,autController.allowedTo('user') , checkoutSession)
 
 router.route('/:cartId')
     .post(
         autController.protected, 
-        autController.allowedTo('user' , checkoutSession), 
+        autController.allowedTo('user'), 
         createCashOrder
     )
 
