@@ -44,6 +44,11 @@ if(process.env.NODE_ENV === 'development'){
     console.log(`mode ${process.env.NODE_ENV}`);
 };
 
+// To make server alive
+app.get('/', (req, res) => {
+    res.send('Server is alive');
+});
+
 // Mount routes
 mountRoutes(app);
 // app.use('/api/categories' , categoryRoutes);
