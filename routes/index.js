@@ -12,18 +12,18 @@ const cartRoutes = require('./cartRoutes');
 const orderRoutes = require('./orderRoutes');
 
 const mountRoutes = (app) => {
-    app.use('/api/categories' , categoryRoutes);
-    app.use('/api/subCategories' , subCategoryRoutes);
-    app.use('/api/brands' , brandRoutes);
-    app.use('/api/products' , productRoutes);
-    app.use('/api/users' , userRoutes);
-    app.use('/api/auth' , authRoutes);
-    app.use('/api/reviews' , reviewRoutes);
-    app.use('/api/wishlist' , wishListRoutes);
-    app.use('/api/address' , addressRoutes);
-    app.use('/api/coupon' , couponRoutes);
-    app.use('/api/cart' , cartRoutes);
-    app.use('/api/orders' , orderRoutes);
+    app.use('/api/v1/categories' , categoryRoutes);
+    app.use('/api/v1/subCategories' , subCategoryRoutes);
+    app.use('/api/v1/brands' , brandRoutes);
+    app.use('/api/v1/products' , productRoutes);
+    app.use('/api/v1/users' , userRoutes);
+    app.use('/api/v1/auth' , authRoutes);
+    app.use('/api/v1/reviews' , reviewRoutes);
+    app.use('/api/v1/wishlist' , wishListRoutes);
+    app.use('/api/v1/address' , addressRoutes);
+    app.use('/api/v1/coupon' , couponRoutes);
+    app.use('/api/v1/cart' , cartRoutes);
+    app.use('/api/v1/orders' , orderRoutes);
 };
 
 module.exports = mountRoutes;
