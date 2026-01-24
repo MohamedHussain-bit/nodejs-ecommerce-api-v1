@@ -34,7 +34,7 @@ app.use(cors());
 // Compress all response
 app.use(compression());
 
-app.use(express.json())
+app.use(express.json({limit : '20kb'}));
 app.use(express.static(path.join(__dirname , 'uploads')));
 
 connectBD()
