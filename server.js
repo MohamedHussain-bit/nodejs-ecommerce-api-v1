@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const compression = require('compression');
+const mongoSanitize = require('express-mongo-sanitize');
 
 const connectBD = require('./config/connectDB');
 
@@ -33,6 +34,9 @@ app.use(cors());
 
 // Compress all response
 app.use(compression());
+
+// Make sanitize from input data
+app.use(mongoSanitize({replaceWith : '_'}));
 
 app.use(express.json({limit : '20kb'}));
 app.use(express.static(path.join(__dirname , 'uploads')));
