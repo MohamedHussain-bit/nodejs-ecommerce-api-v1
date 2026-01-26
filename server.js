@@ -36,6 +36,9 @@ app.use(cors());
 // Compress all response
 app.use(compression());
 
+// Make sanitize from input data
+app.use(mongoSanitize({replaceWith : '_'}));
+
 app.use(express.json({limit : '20kb'}));
 app.use(express.static(path.join(__dirname , 'uploads')));
 
