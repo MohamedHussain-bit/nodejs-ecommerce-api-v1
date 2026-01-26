@@ -46,17 +46,14 @@ if(process.env.NODE_ENV === 'development'){
     console.log(`mode ${process.env.NODE_ENV}`);
 };
 
-// Make sanitize from input data
-app.use(mongoSanitize({replaceWith : '_'}));
-
 // Apply rate limiter
 const limiter = rateLimit({
     windowMs : 15 * 60 * 1000,
-    limit : 100,
+    max : 100,
     message : 'To many requests please try again later',
 });
 
-app.use('/api' , limiter);
+app.use(limiter);
 
 // To make server alive
 app.get('/', (req, res) => {
