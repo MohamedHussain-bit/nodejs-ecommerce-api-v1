@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const compression = require('compression');
 const mongoSanitize = require('express-mongo-sanitize');
+const rateLimit = require('express-rate-limit');
 
 const connectBD = require('./config/connectDB');
 
@@ -35,9 +36,6 @@ app.use(cors());
 // Compress all response
 app.use(compression());
 
-// Make sanitize from input data
-app.use(mongoSanitize({replaceWith : '_'}));
-
 app.use(express.json({limit : '20kb'}));
 app.use(express.static(path.join(__dirname , 'uploads')));
 
@@ -47,6 +45,18 @@ if(process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'));
     console.log(`mode ${process.env.NODE_ENV}`);
 };
+
+// Make sanitize from input data
+app.use(mongoSanitize({replaceWith : '_'}));
+
+// Apply rate limiter
+const limiter = rateLimit({
+    windowMs : 15 * 60 * 1000,
+    limit : 100,
+    message : 'To many requests please try again later',
+});
+
+app.use('/api' , limiter);
 
 // To make server alive
 app.get('/', (req, res) => {
