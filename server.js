@@ -9,6 +9,7 @@ const compression = require('compression');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
+const xssSanitize = require('xss-sanitize');
 
 const connectBD = require('./config/connectDB');
 
@@ -47,6 +48,9 @@ app.use(express.static(path.join(__dirname , 'uploads')));
 app.use(hpp({
     whitelist : ['price' , 'sold' , 'quantity']
 }));
+
+// protected from xss attacks
+app.use(xssSanitize());
 
 connectBD()
 
