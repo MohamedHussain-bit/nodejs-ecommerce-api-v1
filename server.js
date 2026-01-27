@@ -8,6 +8,7 @@ const cors = require('cors');
 const compression = require('compression');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
 
 const connectBD = require('./config/connectDB');
 
@@ -41,6 +42,11 @@ app.use(mongoSanitize({replaceWith : '_'}));
 
 app.use(express.json({limit : '20kb'}));
 app.use(express.static(path.join(__dirname , 'uploads')));
+
+// Middleware to protected aginst http parameter pollution
+app.use(hpp({
+    whitelist : ['price' , 'sold' , 'quantity']
+}));
 
 connectBD()
 
