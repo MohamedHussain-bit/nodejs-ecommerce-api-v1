@@ -37,7 +37,7 @@ exports.login = asyncHandler(async (req , res , next) => {
     };
     // Generate token
     const token = createToken(user._id);
-    res.status(200).json({data : user , token});
+    res.status(200).json({data : sanitizeUser(user) , token});
 });
 
 // check if user exist on system
