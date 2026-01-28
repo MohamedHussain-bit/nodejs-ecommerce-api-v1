@@ -7,7 +7,8 @@ const bcrypt = require('bcryptjs');
 const ApiError = require('../utils/apiError');
 const User = require('../models/userModel');
 const sendEmail = require('../utils/sendEmail');
-const createToken = require('../utils/createToken')
+const createToken = require('../utils/createToken');
+const {sanitizeUser} = require('../utils/sanitizeData');
 
 
 // @desc     Signup
@@ -22,7 +23,7 @@ exports.signup = asyncHandler( async (req , res , next) => {
     });
     // Generate token
     const token = createToken(user._id);
-    res.status(201).json({data : user , token});
+    res.status(201).json({data : sanitizeUser(user) , token});
 });
 
 // @desc     Login
